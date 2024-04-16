@@ -1,7 +1,11 @@
 {
   "typeForm": {
     "stage1": {
-      "heading": "Do you want to opt-in for Nomination or not?"
+      "heading": "Do you want to opt-in for Nomination or not?",
+      "options": {
+        "value": "Yes",
+        "options": ["Yes", "No"]
+      }
     }
   }
 }
