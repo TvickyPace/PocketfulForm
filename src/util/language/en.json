@@ -1,5 +1,10 @@
 {
   "typeForm": {
+    "allStages": [
+      { "key": "stage1", "value": "Yes", "heading": "Stage 1" },
+      { "key": "stage2", "value": {}, "heading": "Stage 2" },
+      { "key": "stage3", "value": {}, "heading": "Stage 3" }
+    ],
     "stage1": {
       "options": {
         "heading": "Do you want to opt-in for Nomination or not?",
