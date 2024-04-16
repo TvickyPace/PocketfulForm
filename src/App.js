@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import TypeForm from "./TypeForm";
 import getComponentTexts from "./util/functions/functions";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 function App() {
   const componentText = getComponentTexts("typeForm");
@@ -21,8 +22,7 @@ function App() {
   //handle continuation
   function handleContinue(stage) {
     if (stage === "stage1") {
-      console.log(stage);
-      // setCurrentStage("stage2");
+      setCurrentStage("stage2");
     }
   }
 
@@ -33,14 +33,43 @@ function App() {
       }
     });
     return () => {
-      window.removeEventListener("keydown");
+      window.removeEventListener("keydown", () => {});
     };
   }, []);
 
   return (
     <>
       <div className="h-14 bg-white absolute top-0 w-screen">
-        <div className="max-w-[720px] ml-auto mr-auto h-14">tet</div>
+        <div className="max-w-[720px] ml-auto mr-auto h-14 flex items-center justify-between">
+          {componentText?.allStages?.map((item, index, array) => {
+            return (
+              <React.Fragment key={index}>
+                <div className="flex items-center gap-1 min-w-max px-4">
+                  {item.key === currentStage ? (
+                    <CheckCircleRoundedIcon />
+                  ) : (
+                    <div className=" bg-dark-black rounded-full text-slate-50 w-5 h-5 flex items-center justify-center">
+                      {index + 1}
+                    </div>
+                  )}
+
+                  <p className=" text-md font-semibold text-dark-black">
+                    {item?.heading}
+                  </p>
+                </div>
+                {index !== array.length - 1 && (
+                  <div
+                    className={`${
+                      item.key === currentStage
+                        ? "w-full border-0 border-b-[1px] border-light-dark-black"
+                        : "w-full border-0 border-b-[1px] border-dotted border-light-dark-black"
+                    } `}
+                  />
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
       </div>
       <div className=" min-h-screen max-w-[720px] ml-auto mr-auto flex items-center">
         <TypeForm

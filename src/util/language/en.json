@@ -11,6 +11,13 @@
         "value": "Yes",
         "options": ["Yes", "No"]
       }
+    },
+    "stage2": {
+      "options": {
+        "heading": "Do you want to opt-in for Nomination or not?",
+        "value": "Yes",
+        "options": ["Yes", "No"]
+      }
     }
   }
 }

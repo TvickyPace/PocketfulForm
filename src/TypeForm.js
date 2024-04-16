@@ -16,11 +16,13 @@ function TypeForm({
         <p>1</p>
         <ArrowForwardRoundedIcon style={{ fontSize: "16px" }} />
       </div>
-      <p className=" text-[24px]">
-        Hello, <span className=" font-semibold">Vikas</span>
-      </p>
+      {currentStage === "stage1" && (
+        <p className=" text-[24px] mb-7">
+          Hello, <span className=" font-semibold">Vikas</span>
+        </p>
+      )}
       {componentText?.options && (
-        <div className=" mt-7">
+        <div>
           <p className="text-xl">{componentText?.options?.heading}</p>
           <div className=" mt-7 ps-4">
             {componentText?.options?.options.map((item, index) => {
