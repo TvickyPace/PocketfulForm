@@ -46,9 +46,9 @@ function App() {
               <React.Fragment key={index}>
                 <div className="flex items-center gap-1 min-w-max px-4">
                   {item.key === currentStage ? (
-                    <CheckCircleRoundedIcon />
+                    <CheckCircleRoundedIcon style={{ fontSize: "26px" }} />
                   ) : (
-                    <div className=" bg-dark-black rounded-full text-slate-50 w-5 h-5 flex items-center justify-center">
+                    <div className=" bg-dark-black rounded-full text-slate-50 w-6 h-6 flex items-center justify-center">
                       {index + 1}
                     </div>
                   )}
@@ -60,7 +60,7 @@ function App() {
                 {index !== array.length - 1 && (
                   <div
                     className={`${
-                      item.key === currentStage
+                      Number(currentStage.slice(5)) > index
                         ? "w-full border-0 border-b-[1px] border-light-dark-black"
                         : "w-full border-0 border-b-[1px] border-dotted border-light-dark-black"
                     } `}
