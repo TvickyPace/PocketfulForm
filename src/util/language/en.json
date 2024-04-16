@@ -28,7 +28,7 @@
             "key": "relation",
             "label": "Relation with Nominee",
             "type": "dropdown",
-            "placeHolder": "Son",
+            "placeHolder": "Relation with Nominee",
             "required": true,
             "value": "",
             "dropdownOptions": [

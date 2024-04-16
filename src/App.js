@@ -8,6 +8,25 @@ function App() {
   const componentText = getComponentTexts("typeForm");
   const [currentStage, setCurrentStage] = useState("stage1");
   const [currentContent, setCurrentContent] = useState(componentText);
+  const [dropDownStatus, setDropDownStatus] = useState(false);
+
+  //dropdown function
+  function alternateDropDown() {
+    setDropDownStatus(!dropDownStatus);
+  }
+
+  function closeDropDown() {
+    setDropDownStatus(false);
+  }
+
+  function handleDropDownChanges(value, key) {
+    const newContent = JSON.parse(JSON.stringify(currentContent));
+    newContent[`${currentStage}`].form.formData.filter(
+      (item) => item.key === key
+    )[0].value = value;
+    setCurrentContent(newContent);
+    closeDropDown();
+  }
 
   //option functions
   function handleOptionChanges(value) {
@@ -51,7 +70,7 @@ function App() {
             return (
               <React.Fragment key={index}>
                 <div className="flex items-center gap-1 min-w-max px-4">
-                  {item.key === currentStage ? (
+                  {Number(currentStage.slice(5)) > index ? (
                     <CheckCircleRoundedIcon style={{ fontSize: "26px" }} />
                   ) : (
                     <div className=" bg-dark-black rounded-full text-slate-50 w-6 h-6 flex items-center justify-center">
@@ -84,6 +103,9 @@ function App() {
           handleOptionChanges={handleOptionChanges}
           handleContinue={handleContinue}
           handleFormChanges={handleFormChanges}
+          dropDownStatus={dropDownStatus}
+          alternateDropDown={alternateDropDown}
+          handleDropDownChanges={handleDropDownChanges}
         />
       </div>
     </>

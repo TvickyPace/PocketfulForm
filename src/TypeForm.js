@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import getComponentTexts from "./util/functions/functions";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
 import SubdirectoryArrowLeftSharpIcon from "@mui/icons-material/SubdirectoryArrowLeftSharp";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 
 function TypeForm({
   componentText,
@@ -10,6 +10,9 @@ function TypeForm({
   handleContinue,
   currentStage,
   handleFormChanges,
+  dropDownStatus,
+  alternateDropDown,
+  handleDropDownChanges,
 }) {
   return (
     <div className=" w-full relative">
@@ -72,11 +75,45 @@ function TypeForm({
                   )}
                   {item.type === "dropdown" && (
                     <div className=" relative">
-                      <input
-                        type="text"
-                        placeholder={item.placeHolder}
-                        className=" w-full bg-transparent border-b-[1px] border-dark-black border-opacity-30 focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl "
-                      />
+                      <div className="border-b-[1px] border-dark-black border-opacity-30 py-2 relative cursor-pointer">
+                        <p
+                          className={`text-2xl select-none ${
+                            item.value
+                              ? " text-opacity-100 text-dark-black"
+                              : "text-opacity-50 text-dark-black"
+                          }`}
+                          onClick={alternateDropDown}
+                        >
+                          {item.value !== "" ? item.value : item.placeHolder}
+                        </p>
+                        <KeyboardArrowDownRoundedIcon
+                          className=" absolute right-3 top-1/2 -translate-y-1/2"
+                          onClick={alternateDropDown}
+                        />
+                        {dropDownStatus && (
+                          <ul className=" absolute top-full w-full bg-white rounded-b px-4">
+                            {item?.dropdownOptions.map(
+                              (element, elementIndex, elementArray) => {
+                                return (
+                                  <li
+                                    key={elementIndex}
+                                    className={` py-2 text-lg ${
+                                      elementIndex !==
+                                        elementArray.length - 1 &&
+                                      "border-b-[1px] border-dark-black border-opacity-30"
+                                    } `}
+                                    onClick={() =>
+                                      handleDropDownChanges(element, item.key)
+                                    }
+                                  >
+                                    {element}
+                                  </li>
+                                );
+                              }
+                            )}
+                          </ul>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
