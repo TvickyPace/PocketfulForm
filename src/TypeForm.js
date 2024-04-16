@@ -9,11 +9,16 @@ function TypeForm({
   handleOptionChanges,
   handleContinue,
   currentStage,
+  handleFormChanges,
 }) {
   return (
     <div className=" w-full relative">
-      <div className=" text-md font-bold flex items-center gap-[1px] absolute -left-10 top-1.5">
-        <p>1</p>
+      <div
+        className={`text-md font-bold flex items-center gap-[1px] absolute -left-10 ${
+          currentStage === "stage1" ? "top-1.5" : "top-[1px]"
+        } `}
+      >
+        <p>{Number(currentStage.slice(5))}</p>
         <ArrowForwardRoundedIcon style={{ fontSize: "16px" }} />
       </div>
       {currentStage === "stage1" && (
@@ -37,6 +42,43 @@ function TypeForm({
                     )}
                   </div>
                   <p className=" text-xl">{item}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      {componentText?.form && (
+        <div>
+          <p className="text-xl">{componentText?.form?.heading}</p>
+          <div className=" mt-7 flex flex-col gap-y-9">
+            {componentText?.form?.formData.map((item, index) => {
+              return (
+                <div key={index}>
+                  <p className=" text-lg mb-1">
+                    {item?.label}
+                    {item?.required && " *"}
+                  </p>
+                  {item.type === "text" && (
+                    <input
+                      type="text"
+                      placeholder={item.placeHolder}
+                      value={item.value}
+                      onChange={(e) =>
+                        handleFormChanges(e.target.value, item.key)
+                      }
+                      className=" w-full bg-transparent border-b-[1px] border-dark-black border-opacity-30 focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl"
+                    />
+                  )}
+                  {item.type === "dropdown" && (
+                    <div className=" relative">
+                      <input
+                        type="text"
+                        placeholder={item.placeHolder}
+                        className=" w-full bg-transparent border-b-[1px] border-dark-black border-opacity-30 focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl "
+                      />
+                    </div>
+                  )}
                 </div>
               );
             })}

@@ -1,9 +1,9 @@
 {
   "typeForm": {
     "allStages": [
-      { "key": "stage1", "value": "Yes", "heading": "Stage 1" },
-      { "key": "stage2", "value": {}, "heading": "Stage 2" },
-      { "key": "stage3", "value": {}, "heading": "Stage 3" }
+      { "key": "stage1", "heading": "Stage 1" },
+      { "key": "stage2", "heading": "Stage 2" },
+      { "key": "stage3", "heading": "Stage 3" }
     ],
     "stage1": {
       "options": {
@@ -13,10 +13,51 @@
       }
     },
     "stage2": {
-      "options": {
-        "heading": "Do you want to opt-in for Nomination or not?",
-        "value": "Yes",
-        "options": ["Yes", "No"]
+      "form": {
+        "heading": "Enter Nominee Details",
+        "formData": [
+          {
+            "key": "name",
+            "label": "Full Name",
+            "placeHolder": "Ram",
+            "required": true,
+            "type": "text",
+            "value": ""
+          },
+          {
+            "key": "relation",
+            "label": "Relation with Nominee",
+            "type": "dropdown",
+            "placeHolder": "Son",
+            "required": true,
+            "value": "",
+            "dropdownOptions": [
+              "Son",
+              "Daughter",
+              "Mother",
+              "Father",
+              "Spouse",
+              "Relative"
+            ]
+          },
+          {
+            "key": "address",
+            "label": "Address of Nominee",
+            "placeHolder": "New Delhi",
+            "required": true,
+            "type": "text",
+            "value": ""
+          },
+          {
+            "key": "percentage",
+            "label": "Percentage",
+            "placeHolder": "25",
+            "required": true,
+            "type": "text",
+            "realType": "number",
+            "value": ""
+          }
+        ]
       }
     }
   }

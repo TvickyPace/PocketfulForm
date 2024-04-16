@@ -11,10 +11,16 @@ function App() {
 
   //option functions
   function handleOptionChanges(value) {
-    const newContent = JSON.parse(JSON.stringify(componentText));
+    const newContent = JSON.parse(JSON.stringify(currentContent));
     newContent[`${currentStage}`].options.value = value;
-    newContent["allStages"].filter(
-      (item) => item.key === currentStage
+    setCurrentContent(newContent);
+  }
+
+  //form functions
+  function handleFormChanges(value, key) {
+    const newContent = JSON.parse(JSON.stringify(currentContent));
+    newContent[`${currentStage}`].form.formData.filter(
+      (item) => item.key === key
     )[0].value = value;
     setCurrentContent(newContent);
   }
@@ -77,6 +83,7 @@ function App() {
           componentText={currentContent[`${currentStage}`]}
           handleOptionChanges={handleOptionChanges}
           handleContinue={handleContinue}
+          handleFormChanges={handleFormChanges}
         />
       </div>
     </>
