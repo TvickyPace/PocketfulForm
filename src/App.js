@@ -9,6 +9,12 @@ function App() {
   const [currentStage, setCurrentStage] = useState("stage1");
   const [currentContent, setCurrentContent] = useState(componentText);
   const [dropDownStatus, setDropDownStatus] = useState(false);
+  const [currentNominee, setCurrentNominee] = useState(1);
+
+  //nominee functions
+  function changeCurrentNominee(value) {
+    setCurrentNominee(value);
+  }
 
   //dropdown function
   function alternateDropDown() {
@@ -21,7 +27,7 @@ function App() {
 
   function handleDropDownChanges(value, key) {
     const newContent = JSON.parse(JSON.stringify(currentContent));
-    newContent[`${currentStage}`].form.formData.filter(
+    newContent[`${currentStage}`].form[`formData${currentNominee}`].filter(
       (item) => item.key === key
     )[0].value = value;
     setCurrentContent(newContent);
@@ -38,7 +44,7 @@ function App() {
   //form functions
   function handleFormChanges(value, key) {
     const newContent = JSON.parse(JSON.stringify(currentContent));
-    newContent[`${currentStage}`].form.formData.filter(
+    newContent[`${currentStage}`].form[`formData${currentNominee}`].filter(
       (item) => item.key === key
     )[0].value = value;
     setCurrentContent(newContent);
@@ -48,7 +54,15 @@ function App() {
   function handleContinue(stage) {
     if (stage === "stage1") {
       setCurrentStage("stage2");
+    } else if (stage === "stage2") {
+      setCurrentStage("stage3");
+    } else if (stage === "stage3") {
+      setCurrentStage("stage4");
     }
+  }
+
+  function navigateStage(stage) {
+    setCurrentStage(stage);
   }
 
   useEffect(() => {
@@ -60,8 +74,9 @@ function App() {
     return () => {
       window.removeEventListener("keydown", () => {});
     };
-  }, []);
+  }, [currentStage]);
 
+  console.log(currentNominee);
   return (
     <>
       <div className="h-14 bg-white absolute top-0 w-screen">
@@ -69,7 +84,10 @@ function App() {
           {componentText?.allStages?.map((item, index, array) => {
             return (
               <React.Fragment key={index}>
-                <div className="flex items-center gap-1 min-w-max px-4">
+                <div
+                  className="flex items-center gap-1 min-w-max px-4 cursor-pointer select-none"
+                  onClick={() => navigateStage(item.key)}
+                >
                   {Number(currentStage.slice(5)) > index ? (
                     <CheckCircleRoundedIcon style={{ fontSize: "26px" }} />
                   ) : (
@@ -106,6 +124,8 @@ function App() {
           dropDownStatus={dropDownStatus}
           alternateDropDown={alternateDropDown}
           handleDropDownChanges={handleDropDownChanges}
+          changeCurrentNominee={changeCurrentNominee}
+          currentNominee={currentNominee}
         />
       </div>
     </>
