@@ -78,14 +78,14 @@ function App() {
 
   console.log(currentNominee);
   return (
-    <>
-      <div className="h-14 bg-white absolute top-0 w-screen">
-        <div className="max-w-[720px] ml-auto mr-auto h-14 flex items-center justify-between">
+    <div className="px-5">
+      <div className="md:h-14 h-12 bg-white absolute top-0 left-0 w-screen">
+        <div className="max-w-[720px] ml-auto mr-auto h-full flex items-center justify-between">
           {componentText?.allStages?.map((item, index, array) => {
             return (
               <React.Fragment key={index}>
                 <div
-                  className="flex items-center gap-1 min-w-max px-4 cursor-pointer select-none"
+                  className="flex items-center gap-1 min-w-max px-3 cursor-pointer select-none"
                   onClick={() => navigateStage(item.key)}
                 >
                   {Number(currentStage.slice(5)) > index ? (
@@ -96,7 +96,7 @@ function App() {
                     </div>
                   )}
 
-                  <p className=" text-md font-semibold text-dark-black">
+                  <p className=" text-sm md:text-base font-semibold text-dark-black">
                     {item?.heading}
                   </p>
                 </div>
@@ -114,7 +114,7 @@ function App() {
           })}
         </div>
       </div>
-      <div className=" min-h-screen max-w-[720px] ml-auto mr-auto flex items-center">
+      <div className=" min-h-screen max-w-[720px] ml-auto mr-auto flex items-center py-24">
         <TypeForm
           currentStage={currentStage}
           componentText={currentContent[`${currentStage}`]}
@@ -128,7 +128,7 @@ function App() {
           currentNominee={currentNominee}
         />
       </div>
-    </>
+    </div>
   );
 }
 

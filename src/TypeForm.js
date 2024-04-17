@@ -18,10 +18,10 @@ function TypeForm({
   changeCurrentNominee,
 }) {
   return (
-    <div className=" w-full relative">
+    <div className=" w-full relative ">
       {currentStage !== "stage4" && (
         <div
-          className={`text-md font-bold flex items-center gap-[1px] absolute -left-10 ${
+          className={`text-md font-bold lg:flex items-center gap-[1px] absolute -left-10 hidden ${
             currentStage === "stage1" ? "top-1.5" : "top-[1px]"
           } `}
         >
@@ -153,7 +153,7 @@ function TypeForm({
             return (
               <div
                 key={index}
-                className=" bg-slate-200 cursor-pointer  text-dark-black text-xl py-1.5 px-4 rounded-md font-medium flex items-center gap-1.5 hover:bg-dark-black  hover:text-light-background"
+                className=" bg-slate-200 cursor-pointer  text-dark-black text-xl py-1 px-3.5 rounded-md font-medium flex items-center gap-1.5 hover:bg-dark-black  hover:text-light-background"
                 onClick={() => changeCurrentNominee(item)}
               >
                 {item}
@@ -163,7 +163,7 @@ function TypeForm({
         </div>
       )}
       {currentStage !== "stage4" && (
-        <div className=" mt-11 flex items-center justify-between">
+        <div className=" mt-11 flex items-center justify-between flex-wrap gap-x-2 gap-y-5">
           <div className="flex gap-3 items-center">
             <button
               className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black"
