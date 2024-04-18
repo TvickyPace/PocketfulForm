@@ -62,7 +62,7 @@
           {
             "key": "name",
             "label": "Full Name",
-            "placeHolder": "Ram2",
+            "placeHolder": "Ram",
             "required": true,
             "type": "text",
             "value": ""
@@ -105,7 +105,7 @@
           {
             "key": "name",
             "label": "Full Name",
-            "placeHolder": "Ram3",
+            "placeHolder": "Ram",
             "required": true,
             "type": "text",
             "value": ""

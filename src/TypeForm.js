@@ -58,7 +58,12 @@ function TypeForm({
       )}
       {componentText?.form && (
         <div>
-          <p className="text-xl">{componentText?.form?.heading}</p>
+          <p className="text-xl flex items-center gap-2">
+            {componentText?.form?.heading}{" "}
+            <span className="bg-dark-black rounded-full text-slate-50 w-5 h-5 flex items-center justify-center text-base">
+              {currentNominee}
+            </span>
+          </p>
           <div className=" mt-7 flex flex-col gap-y-9">
             {componentText?.form[`formData${currentNominee}`].map(
               (item, index) => {
