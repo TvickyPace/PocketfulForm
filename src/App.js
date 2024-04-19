@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import TypeForm from "./TypeForm";
 import getComponentTexts from "./util/functions/functions";
@@ -50,16 +50,61 @@ function App() {
     setCurrentContent(newContent);
   }
 
-  //handle continuation
-  function handleContinue(stage) {
-    if (stage === "stage1") {
-      setCurrentStage("stage2");
-    } else if (stage === "stage2") {
+  //handle Skip
+  function handleSkip(stage) {
+    if (stage === "stage2") {
+      const newContent = JSON.parse(JSON.stringify(currentContent));
+      newContent[`${currentStage}`].form.formData1.map((item) => {
+        item.value = "";
+        return item;
+      });
+      newContent[`${currentStage}`].form.formData2.map((item) => {
+        item.value = "";
+        return item;
+      });
+      newContent[`${currentStage}`].form.formData3.map((item) => {
+        item.value = "";
+        return item;
+      });
+      setCurrentContent(newContent);
       setCurrentStage("stage3");
-    } else if (stage === "stage3") {
-      setCurrentStage("stage4");
     }
   }
+
+  //handle continuation
+  const handleContinue = useCallback(
+    (stage) => {
+      if (stage === "stage1") {
+        if (currentContent[`${stage}`].options.value === "Yes") {
+          setCurrentStage("stage2");
+        }
+      } else if (stage === "stage2") {
+        const form1Boolean = currentContent[`${stage}`].form.formData1.every(
+          (item) => item.value !== ""
+        );
+        const form2Boolean =
+          currentContent[`${stage}`].form.formData2.every(
+            (item) => item.value !== ""
+          ) ||
+          currentContent[`${stage}`].form.formData2.every(
+            (item) => item.value === ""
+          );
+        const form3Boolean =
+          currentContent[`${stage}`].form.formData3.every(
+            (item) => item.value !== ""
+          ) ||
+          currentContent[`${stage}`].form.formData3.every(
+            (item) => item.value === ""
+          );
+        if (form1Boolean || form2Boolean || form3Boolean) {
+          setCurrentStage("stage3");
+        }
+      } else if (stage === "stage3") {
+        setCurrentStage("stage4");
+      }
+    },
+    [currentContent]
+  );
 
   function navigateStage(stage) {
     setCurrentStage(stage);
@@ -74,9 +119,8 @@ function App() {
     return () => {
       window.removeEventListener("keydown", () => {});
     };
-  }, [currentStage]);
+  }, [currentStage, handleContinue]);
 
-  console.log(currentNominee);
   return (
     <div className="px-5">
       <div className="md:h-14 h-12 bg-white absolute top-0 left-0 w-screen">
@@ -126,6 +170,7 @@ function App() {
           handleDropDownChanges={handleDropDownChanges}
           changeCurrentNominee={changeCurrentNominee}
           currentNominee={currentNominee}
+          handleSkip={handleSkip}
         />
       </div>
     </div>

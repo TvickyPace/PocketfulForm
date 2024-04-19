@@ -16,6 +16,7 @@ function TypeForm({
   handleDropDownChanges,
   currentNominee,
   changeCurrentNominee,
+  handleSkip,
 }) {
   return (
     <div className=" w-full relative ">
@@ -186,7 +187,10 @@ function TypeForm({
             </p>
           </div>
           {currentStage === "stage2" && (
-            <button className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black">
+            <button
+              className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black"
+              onClick={() => handleSkip(currentStage)}
+            >
               Skip
               <SkipNextIcon />
             </button>
