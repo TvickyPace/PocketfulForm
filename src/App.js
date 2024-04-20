@@ -96,7 +96,7 @@ function App() {
           currentContent[`${stage}`].form.formData3.every(
             (item) => item.value === ""
           );
-        if (form1Boolean || form2Boolean || form3Boolean) {
+        if (form1Boolean && form2Boolean && form3Boolean) {
           setCurrentStage("stage3");
         }
       } else if (stage === "stage3") {
@@ -111,13 +111,16 @@ function App() {
   }
 
   useEffect(() => {
-    window.addEventListener("keydown", (e) => {
+    const handleKeyDown = (e) => {
       if (e.key === "Enter") {
         handleContinue(currentStage);
       }
-    });
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      window.removeEventListener("keydown", () => {});
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentStage, handleContinue]);
 
