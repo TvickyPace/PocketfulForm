@@ -27,9 +27,9 @@ function App() {
 
   function handleDropDownChanges(value, key) {
     const newContent = JSON.parse(JSON.stringify(currentContent));
-    newContent[`${currentStage}`].form[`formData${currentNominee}`].filter(
-      (item) => item.key === key
-    )[0].value = value;
+    newContent[`${currentStage}`].form[
+      `formData${currentNominee}`
+    ].formList.filter((item) => item.key === key)[0].value = value;
     setCurrentContent(newContent);
     closeDropDown();
   }
@@ -44,9 +44,9 @@ function App() {
   //form functions
   function handleFormChanges(value, key) {
     const newContent = JSON.parse(JSON.stringify(currentContent));
-    newContent[`${currentStage}`].form[`formData${currentNominee}`].filter(
-      (item) => item.key === key
-    )[0].value = value;
+    newContent[`${currentStage}`].form[
+      `formData${currentNominee}`
+    ].formList.filter((item) => item.key === key)[0].value = value;
     setCurrentContent(newContent);
   }
 
@@ -54,15 +54,15 @@ function App() {
   function handleSkip(stage) {
     if (stage === "stage2") {
       const newContent = JSON.parse(JSON.stringify(currentContent));
-      newContent[`${currentStage}`].form.formData1.map((item) => {
+      newContent[`${currentStage}`].form.formData1.formList.map((item) => {
         item.value = "";
         return item;
       });
-      newContent[`${currentStage}`].form.formData2.map((item) => {
+      newContent[`${currentStage}`].form.formData2.formList.map((item) => {
         item.value = "";
         return item;
       });
-      newContent[`${currentStage}`].form.formData3.map((item) => {
+      newContent[`${currentStage}`].form.formData3.formList.map((item) => {
         item.value = "";
         return item;
       });
@@ -74,29 +74,57 @@ function App() {
   //handle continuation
   const handleContinue = useCallback(
     (stage) => {
+      const newContent = JSON.parse(JSON.stringify(currentContent));
       if (stage === "stage1") {
-        if (currentContent[`${stage}`].options.value === "Yes") {
+        if (newContent[`${stage}`].options.value === "Yes") {
           setCurrentStage("stage2");
         }
       } else if (stage === "stage2") {
-        const form1Boolean = currentContent[`${stage}`].form.formData1.every(
-          (item) => item.value !== ""
-        );
+        const form1Boolean = newContent[
+          `${stage}`
+        ].form.formData1.formList.every((item) => item.value !== "");
         const form2Boolean =
-          currentContent[`${stage}`].form.formData2.every(
+          newContent[`${stage}`].form.formData2.formList.every(
             (item) => item.value !== ""
           ) ||
-          currentContent[`${stage}`].form.formData2.every(
+          newContent[`${stage}`].form.formData2.formList.every(
             (item) => item.value === ""
           );
         const form3Boolean =
-          currentContent[`${stage}`].form.formData3.every(
+          newContent[`${stage}`].form.formData3.formList.every(
             (item) => item.value !== ""
           ) ||
-          currentContent[`${stage}`].form.formData3.every(
+          newContent[`${stage}`].form.formData3.formList.every(
             (item) => item.value === ""
           );
-        if (form1Boolean && form2Boolean && form3Boolean) {
+        if (!form1Boolean) {
+          newContent[`${stage}`].form.formData1.isError = true;
+          newContent[`${stage}`].form.formData1.formList.map((item) => {
+            if (item.value === "") {
+              item.isError = true;
+            }
+            return item;
+          });
+          setCurrentContent(newContent);
+        } else if (!form2Boolean) {
+          newContent[`${stage}`].form.formData1.isError = true;
+          newContent[`${stage}`].form.formData2.formList.map((item) => {
+            if (item.value === "") {
+              item.isError = true;
+            }
+            return item;
+          });
+          setCurrentContent(newContent);
+        } else if (!form3Boolean) {
+          newContent[`${stage}`].form.formData1.isError = true;
+          newContent[`${stage}`].form.formData3.formList.map((item) => {
+            if (item.value === "") {
+              item.isError = true;
+            }
+            return item;
+          });
+          setCurrentContent(newContent);
+        } else if (form1Boolean && form2Boolean && form3Boolean) {
           setCurrentStage("stage3");
         }
       } else if (stage === "stage3") {
@@ -123,6 +151,8 @@ function App() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentStage, handleContinue]);
+
+  console.log(currentContent);
 
   return (
     <div className="px-5">

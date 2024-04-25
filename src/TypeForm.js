@@ -66,7 +66,7 @@ function TypeForm({
             </span>
           </p>
           <div className=" mt-7 flex flex-col gap-y-9">
-            {componentText?.form[`formData${currentNominee}`].map(
+            {componentText?.form[`formData${currentNominee}`].formList.map(
               (item, index) => {
                 return (
                   <div key={index}>
@@ -82,12 +82,29 @@ function TypeForm({
                         onChange={(e) =>
                           handleFormChanges(e.target.value, item.key)
                         }
-                        className=" w-full bg-transparent border-b-[1px] border-dark-black border-opacity-30 focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl"
+                        className={`w-full bg-transparent border-b-[1px] ${
+                          item.isError && item.value === ""
+                            ? "border-red-600 border-opacity-80"
+                            : "border-dark-black border-opacity-30"
+                        }   focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl`}
                       />
                     )}
+                    {item.isError &&
+                      item.type === "text" &&
+                      item.value === "" && (
+                        <p className=" text-red-600 text-sm mt-1 font-medium">
+                          {item.error}
+                        </p>
+                      )}
                     {item.type === "dropdown" && (
                       <div className=" relative">
-                        <div className="border-b-[1px] border-dark-black border-opacity-30 py-2 relative cursor-pointer">
+                        <div
+                          className={`${
+                            item.isError && item.value === ""
+                              ? "border-red-600 border-opacity-80"
+                              : "border-dark-black border-opacity-30"
+                          } border-b-[1px] py-2 relative cursor-pointer`}
+                        >
                           <p
                             className={`text-2xl select-none ${
                               item.value
@@ -128,6 +145,13 @@ function TypeForm({
                         </div>
                       </div>
                     )}
+                    {item.isError &&
+                      item.type === "dropdown" &&
+                      item.value === "" && (
+                        <p className=" text-red-600 text-sm mt-1 font-medium">
+                          {item.error}
+                        </p>
+                      )}
                   </div>
                 );
               }
@@ -159,7 +183,12 @@ function TypeForm({
             return (
               <div
                 key={index}
-                className=" bg-slate-200 cursor-pointer  text-dark-black text-xl py-1 px-3.5 rounded-md font-medium flex items-center gap-1.5 hover:bg-dark-black  hover:text-light-background"
+                className={`${
+                  componentText.form[`formData${currentNominee}`].isError &&
+                  currentNominee === item
+                    ? "text-red-600 border border-red-600 "
+                    : "text-dark-black"
+                } bg-slate-200 cursor-pointer   text-xl py-1 px-3.5 rounded-md font-medium flex items-center gap-1.5 hover:bg-dark-black  hover:text-light-background`}
                 onClick={() => changeCurrentNominee(item)}
               >
                 {item}

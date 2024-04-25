@@ -15,135 +15,168 @@
     "stage2": {
       "form": {
         "heading": "Enter Nominee Details",
-        "formData1": [
-          {
-            "key": "name",
-            "label": "Full Name",
-            "placeHolder": "Ram",
-            "required": true,
-            "type": "text",
-            "value": ""
-          },
-          {
-            "key": "relation",
-            "label": "Relation with Nominee",
-            "type": "dropdown",
-            "placeHolder": "Relation with Nominee",
-            "required": true,
-            "value": "",
-            "dropdownOptions": [
-              "Son",
-              "Daughter",
-              "Mother",
-              "Father",
-              "Spouse",
-              "Relative"
-            ]
-          },
-          {
-            "key": "address",
-            "label": "Address of Nominee",
-            "placeHolder": "New Delhi",
-            "required": true,
-            "type": "text",
-            "value": ""
-          },
-          {
-            "key": "percentage",
-            "label": "Percentage",
-            "placeHolder": "25",
-            "required": true,
-            "type": "text",
-            "realType": "number",
-            "value": ""
-          }
-        ],
-        "formData2": [
-          {
-            "key": "name",
-            "label": "Full Name",
-            "placeHolder": "Ram",
-            "required": true,
-            "type": "text",
-            "value": ""
-          },
-          {
-            "key": "relation",
-            "label": "Relation with Nominee",
-            "type": "dropdown",
-            "placeHolder": "Relation with Nominee",
-            "required": true,
-            "value": "",
-            "dropdownOptions": [
-              "Son",
-              "Daughter",
-              "Mother",
-              "Father",
-              "Spouse",
-              "Relative"
-            ]
-          },
-          {
-            "key": "address",
-            "label": "Address of Nominee",
-            "placeHolder": "New Delhi",
-            "required": true,
-            "type": "text",
-            "value": ""
-          },
-          {
-            "key": "percentage",
-            "label": "Percentage",
-            "placeHolder": "25",
-            "required": true,
-            "type": "text",
-            "realType": "number",
-            "value": ""
-          }
-        ],
-        "formData3": [
-          {
-            "key": "name",
-            "label": "Full Name",
-            "placeHolder": "Ram",
-            "required": true,
-            "type": "text",
-            "value": ""
-          },
-          {
-            "key": "relation",
-            "label": "Relation with Nominee",
-            "type": "dropdown",
-            "placeHolder": "Relation with Nominee",
-            "required": true,
-            "value": "",
-            "dropdownOptions": [
-              "Son",
-              "Daughter",
-              "Mother",
-              "Father",
-              "Spouse",
-              "Relative"
-            ]
-          },
-          {
-            "key": "address",
-            "label": "Address of Nominee",
-            "placeHolder": "New Delhi",
-            "required": true,
-            "type": "text",
-            "value": ""
-          },
-          {
-            "key": "percentage",
-            "label": "Percentage",
-            "placeHolder": "25",
-            "required": true,
-            "type": "text",
-            "realType": "number",
-            "value": ""
-          }
-        ]
+        "formData1": {
+          "isError": false,
+          "formList": [
+            {
+              "key": "name",
+              "label": "Full Name",
+              "placeHolder": "Ram",
+              "required": true,
+              "type": "text",
+              "value": "",
+              "error": "Name field is required",
+              "isError": false
+            },
+            {
+              "key": "relation",
+              "label": "Relation with Nominee",
+              "type": "dropdown",
+              "placeHolder": "Relation with Nominee",
+              "required": true,
+              "value": "",
+              "error": "Relation with nominee is required",
+              "isError": false,
+              "dropdownOptions": [
+                "Son",
+                "Daughter",
+                "Mother",
+                "Father",
+                "Spouse",
+                "Relative"
+              ]
+            },
+            {
+              "key": "address",
+              "label": "Address of Nominee",
+              "placeHolder": "New Delhi",
+              "required": true,
+              "type": "text",
+              "value": "",
+              "error": "Address is required",
+              "isError": false
+            },
+            {
+              "key": "percentage",
+              "label": "Percentage",
+              "placeHolder": "25",
+              "required": true,
+              "type": "text",
+              "realType": "number",
+              "value": "",
+              "error": "Nominee percentage is required",
+              "isError": false
+            }
+          ]
+        },
+        "formData2": {
+          "isError": false,
+          "formList": [
+            {
+              "key": "name",
+              "label": "Full Name",
+              "placeHolder": "Ram",
+              "required": true,
+              "type": "text",
+              "value": "",
+              "error": "Name field is required",
+              "isError": false
+            },
+            {
+              "key": "relation",
+              "label": "Relation with Nominee",
+              "type": "dropdown",
+              "placeHolder": "Relation with Nominee",
+              "required": true,
+              "value": "",
+              "error": "Relation with nominee is required",
+              "isError": false,
+              "dropdownOptions": [
+                "Son",
+                "Daughter",
+                "Mother",
+                "Father",
+                "Spouse",
+                "Relative"
+              ]
+            },
+            {
+              "key": "address",
+              "label": "Address of Nominee",
+              "placeHolder": "New Delhi",
+              "required": true,
+              "type": "text",
+              "value": "",
+              "error": "Address is required",
+              "isError": false
+            },
+            {
+              "key": "percentage",
+              "label": "Percentage",
+              "placeHolder": "25",
+              "required": true,
+              "type": "text",
+              "realType": "number",
+              "value": "",
+              "error": "Nominee percentage is required",
+              "isError": false
+            }
+          ]
+        },
+        "formData3": {
+          "isError": false,
+          "formList": [
+            {
+              "key": "name",
+              "label": "Full Name",
+              "placeHolder": "Ram",
+              "required": true,
+              "type": "text",
+              "value": "",
+              "error": "Name field is required",
+              "isError": false
+            },
+            {
+              "key": "relation",
+              "label": "Relation with Nominee",
+              "type": "dropdown",
+              "placeHolder": "Relation with Nominee",
+              "required": true,
+              "value": "",
+              "error": "Relation with nominee is required",
+              "isError": false,
+              "dropdownOptions": [
+                "Son",
+                "Daughter",
+                "Mother",
+                "Father",
+                "Spouse",
+                "Relative"
+              ]
+            },
+            {
+              "key": "address",
+              "label": "Address of Nominee",
+              "placeHolder": "New Delhi",
+              "required": true,
+              "type": "text",
+              "value": "",
+              "error": "Address is required",
+              "isError": false
+            },
+            {
+              "key": "percentage",
+              "label": "Percentage",
+              "placeHolder": "25",
+              "required": true,
+              "type": "text",
+              "realType": "number",
+              "value": "",
+              "error": "Nominee percentage is required",
+              "isError": false
+            }
+          ]
+        }
       }
     },
     "stage3": {
