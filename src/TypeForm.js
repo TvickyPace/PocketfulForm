@@ -215,22 +215,26 @@ function TypeForm({
                             onClick={alternateDropDown}
                           />
                           {dropDownStatus && (
-                            <ul className=" absolute top-full w-full bg-white rounded-b px-4">
+                            <ul className=" absolute top-full w-full bg-white rounded-b">
                               {item?.dropdownOptions.map(
                                 (element, elementIndex, elementArray) => {
                                   return (
                                     <li
                                       key={elementIndex}
-                                      className={` py-2 text-lg ${
-                                        elementIndex !==
-                                          elementArray.length - 1 &&
-                                        "border-b-[1px] border-dark-black border-opacity-30"
-                                      } `}
+                                      className={` pt-2 text-lg  hover:bg-dark-black hover:text-white transition-all duration-100 `}
                                       onClick={() =>
                                         handleDropDownChanges(element, item.key)
                                       }
                                     >
-                                      {element}
+                                      <p className="px-4">{element}</p>
+                                      {elementIndex !==
+                                      elementArray.length - 1 ? (
+                                        <div className=" flex justify-center mt-2 ">
+                                          <div className=" border-b-[1px] border-dark-black border-opacity-30 w-[95%] " />
+                                        </div>
+                                      ) : (
+                                        <div className="pt-2" />
+                                      )}
                                     </li>
                                   );
                                 }
