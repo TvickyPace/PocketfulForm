@@ -110,25 +110,64 @@ function App() {
       } else if (stage === "stage2") {
         const form1Boolean = newContent[
           `${stage}`
-        ].form.formData1.formList.every((item) => item.value !== "");
+        ].form.formData1.formList.every((item) => {
+          if (item.type === "dropdown") {
+            if (item.value === "Choose a nominee relation") {
+              return false;
+            } else {
+              return true;
+            }
+          }
+          return item.value !== "";
+        });
         const form2Boolean =
-          newContent[`${stage}`].form.formData2.formList.every(
-            (item) => item.value !== ""
-          ) ||
-          newContent[`${stage}`].form.formData2.formList.every(
-            (item) => item.value === ""
-          );
+          newContent[`${stage}`].form.formData2.formList.every((item) => {
+            if (item.type === "dropdown") {
+              if (item.value === "Choose a nominee relation") {
+                return false;
+              } else {
+                return true;
+              }
+            }
+            return item.value !== "";
+          }) ||
+          newContent[`${stage}`].form.formData2.formList.every((item) => {
+            if (item.type === "dropdown") {
+              if (item.value === "Choose a nominee relation") {
+                return true;
+              } else {
+                return false;
+              }
+            }
+            return item.value === "";
+          });
         const form3Boolean =
-          newContent[`${stage}`].form.formData3.formList.every(
-            (item) => item.value !== ""
-          ) ||
-          newContent[`${stage}`].form.formData3.formList.every(
-            (item) => item.value === ""
-          );
+          newContent[`${stage}`].form.formData3.formList.every((item) => {
+            if (item.type === "dropdown") {
+              if (item.value === "Choose a nominee relation") {
+                return false;
+              } else {
+                return true;
+              }
+            }
+            return item.value !== "";
+          }) ||
+          newContent[`${stage}`].form.formData3.formList.every((item) => {
+            if (item.type === "dropdown") {
+              if (item.value === "Choose a nominee relation") {
+                return true;
+              } else {
+                return false;
+              }
+            }
+            return item.value === "";
+          });
         if (!form1Boolean) {
           newContent[`${stage}`].form.formData1.isError = true;
           newContent[`${stage}`].form.formData1.formList.map((item) => {
             if (item.value === "") {
+              item.isError = true;
+            } else if (item.value === "Choose a nominee relation") {
               item.isError = true;
             }
             return item;
@@ -140,6 +179,8 @@ function App() {
           newContent[`${stage}`].form.formData2.formList.map((item) => {
             if (item.value === "") {
               item.isError = true;
+            } else if (item.value === "Choose a nominee relation") {
+              item.isError = true;
             }
             return item;
           });
@@ -149,6 +190,8 @@ function App() {
           newContent[`${stage}`].form.formData3.isError = true;
           newContent[`${stage}`].form.formData3.formList.map((item) => {
             if (item.value === "") {
+              item.isError = true;
+            } else if (item.value === "Choose a nominee relation") {
               item.isError = true;
             }
             return item;

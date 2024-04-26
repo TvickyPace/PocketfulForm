@@ -162,7 +162,7 @@ function TypeForm({
           </p>
           <div className=" mt-7 flex flex-col gap-y-9">
             {componentText?.form[`formData${currentNominee}`].formList.map(
-              (item, index) => {
+              (item, index, array) => {
                 return (
                   <div key={index}>
                     <p className=" text-lg mb-1 select-none">
@@ -202,13 +202,13 @@ function TypeForm({
                         >
                           <p
                             className={`text-2xl select-none ${
-                              item.value
+                              item.value !== "Choose a nominee relation"
                                 ? " text-opacity-100 text-dark-black"
                                 : "text-opacity-50 text-dark-black"
                             }`}
                             onClick={alternateDropDown}
                           >
-                            {item.value !== "" ? item.value : item.placeHolder}
+                            {item.value}
                           </p>
                           <KeyboardArrowDownRoundedIcon
                             className=" absolute right-3 top-1/2 -translate-y-1/2"
@@ -242,7 +242,7 @@ function TypeForm({
                     )}
                     {item.isError &&
                       item.type === "dropdown" &&
-                      item.value === "" && (
+                      item.value === "Choose a nominee relation" && (
                         <p className=" text-red-600 text-sm mt-1 font-medium">
                           {item.error}
                         </p>
