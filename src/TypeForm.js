@@ -11,6 +11,7 @@ function TypeForm({
   handleContinue,
   currentStage,
   handleFormChanges,
+  handleFormPlainChanges,
   dropDownStatus,
   alternateDropDown,
   handleDropDownChanges,
@@ -19,7 +20,7 @@ function TypeForm({
   handleSkip,
 }) {
   return (
-    <div className=" w-full relative ">
+    <div className=" w-full relative flex flex-col gap-y-6 ">
       {currentStage !== "stage4" && (
         <div
           className={`text-md font-bold lg:flex items-center gap-[1px] absolute -left-10 hidden ${
@@ -31,9 +32,103 @@ function TypeForm({
         </div>
       )}
       {currentStage === "stage1" && (
-        <p className=" text-[24px] mb-7">
+        <p className=" text-[24px]">
           Hello, <span className=" font-semibold">Vikas</span>
         </p>
+      )}{" "}
+      {componentText?.formPlain && (
+        <div>
+          <div className=" flex flex-col gap-y-9">
+            {componentText?.formPlain.formList.map((item, index) => {
+              return (
+                <div key={index}>
+                  <p className=" text-lg mb-1 select-none">
+                    {item?.label}
+                    {item?.required && " *"}
+                  </p>
+                  {item.type === "text" && (
+                    <input
+                      type="text"
+                      placeholder={item.placeHolder}
+                      value={item.value}
+                      onChange={(e) =>
+                        handleFormPlainChanges(e.target.value, item.key)
+                      }
+                      className={`w-full bg-transparent border-b-[1px] ${
+                        item.isError && item.value === ""
+                          ? "border-red-600 border-opacity-80"
+                          : "border-dark-black border-opacity-30"
+                      }   focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl`}
+                    />
+                  )}
+                  {item.isError &&
+                    item.type === "text" &&
+                    item.value === "" && (
+                      <p className=" text-red-600 text-sm mt-1 font-medium">
+                        {item.error}
+                      </p>
+                    )}
+                  {item.type === "dropdown" && (
+                    <div className=" relative">
+                      <div
+                        className={`${
+                          item.isError && item.value === ""
+                            ? "border-red-600 border-opacity-80"
+                            : "border-dark-black border-opacity-30"
+                        } border-b-[1px] py-2 relative cursor-pointer`}
+                      >
+                        <p
+                          className={`text-2xl select-none ${
+                            item.value
+                              ? " text-opacity-100 text-dark-black"
+                              : "text-opacity-50 text-dark-black"
+                          }`}
+                          onClick={alternateDropDown}
+                        >
+                          {item.value !== "" ? item.value : item.placeHolder}
+                        </p>
+                        <KeyboardArrowDownRoundedIcon
+                          className=" absolute right-3 top-1/2 -translate-y-1/2"
+                          onClick={alternateDropDown}
+                        />
+                        {dropDownStatus && (
+                          <ul className=" absolute top-full w-full bg-white rounded-b px-4">
+                            {item?.dropdownOptions.map(
+                              (element, elementIndex, elementArray) => {
+                                return (
+                                  <li
+                                    key={elementIndex}
+                                    className={` py-2 text-lg ${
+                                      elementIndex !==
+                                        elementArray.length - 1 &&
+                                      "border-b-[1px] border-dark-black border-opacity-30"
+                                    } `}
+                                    onClick={() =>
+                                      handleDropDownChanges(element, item.key)
+                                    }
+                                  >
+                                    {element}
+                                  </li>
+                                );
+                              }
+                            )}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {item.isError &&
+                    item.type === "dropdown" &&
+                    item.value === "" && (
+                      <p className=" text-red-600 text-sm mt-1 font-medium">
+                        {item.error}
+                      </p>
+                    )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       )}
       {componentText?.options && (
         <div>
@@ -177,15 +272,14 @@ function TypeForm({
         </div>
       )}
       {currentStage === "stage2" && (
-        <div className="mt-9 flex items-center gap-3">
+        <div className="mt-2 flex items-center gap-3">
           <p className="text-xl font-medium select-none">Nominees -</p>
           {[1, 2, 3].map((item, index) => {
             return (
               <div
                 key={index}
                 className={`${
-                  componentText.form[`formData${currentNominee}`].isError &&
-                  currentNominee === item
+                  componentText.form[`formData${item}`].isError
                     ? "text-red-600 border border-red-600 "
                     : "text-dark-black"
                 } bg-slate-200 cursor-pointer   text-xl py-1 px-3.5 rounded-md font-medium flex items-center gap-1.5 hover:bg-dark-black  hover:text-light-background`}
@@ -198,7 +292,7 @@ function TypeForm({
         </div>
       )}
       {currentStage !== "stage4" && (
-        <div className=" mt-11 flex items-center justify-between flex-wrap gap-x-2 gap-y-5">
+        <div className=" mt-7 flex items-center justify-between flex-wrap gap-x-2 gap-y-5">
           <div className="flex gap-3 items-center">
             <button
               className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black"

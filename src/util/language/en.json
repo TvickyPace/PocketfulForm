@@ -6,6 +6,40 @@
       { "key": "stage3", "heading": "Stage 3" }
     ],
     "stage1": {
+      "formPlain": {
+        "formList": [
+          {
+            "key": "name",
+            "label": "Full Name",
+            "placeHolder": "Ram",
+            "required": true,
+            "type": "text",
+            "value": "",
+            "error": "Name field is required",
+            "isError": false
+          },
+          {
+            "key": "email",
+            "label": "Email",
+            "placeHolder": "email@pace.in",
+            "required": true,
+            "type": "text",
+            "value": "",
+            "error": "Email field is required",
+            "isError": false
+          },
+          {
+            "key": "ucc",
+            "label": "Ucc",
+            "placeHolder": "123456",
+            "required": true,
+            "type": "text",
+            "value": "",
+            "error": "Address is required",
+            "isError": false
+          }
+        ]
+      },
       "options": {
         "heading": "Do you want to opt-in for Nomination or not?",
         "value": "Yes",

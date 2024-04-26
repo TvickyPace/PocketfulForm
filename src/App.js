@@ -50,6 +50,14 @@ function App() {
     setCurrentContent(newContent);
   }
 
+  function handleFormPlainChanges(value, key) {
+    const newContent = JSON.parse(JSON.stringify(currentContent));
+    newContent[`${currentStage}`].formPlain.formList.filter(
+      (item) => item.key === key
+    )[0].value = value;
+    setCurrentContent(newContent);
+  }
+
   //handle Skip
   function handleSkip(stage) {
     if (stage === "stage2") {
@@ -76,8 +84,28 @@ function App() {
     (stage) => {
       const newContent = JSON.parse(JSON.stringify(currentContent));
       if (stage === "stage1") {
-        if (newContent[`${stage}`].options.value === "Yes") {
-          setCurrentStage("stage2");
+        const formPlainBoolean = newContent[
+          `${stage}`
+        ].formPlain.formList.every((item) => item.value !== "");
+        if (formPlainBoolean) {
+          newContent[`${stage}`].formPlain.formList.map((item) => {
+            item.isError = false;
+            return item;
+          });
+          setCurrentContent(newContent);
+          if (newContent[`${stage}`].options.value === "Yes") {
+            setCurrentStage("stage2");
+          } else {
+            setCurrentStage("stage3");
+          }
+        } else {
+          newContent[`${stage}`].formPlain.formList.map((item) => {
+            if (item.value === "") {
+              item.isError = true;
+            }
+            return item;
+          });
+          setCurrentContent(newContent);
         }
       } else if (stage === "stage2") {
         const form1Boolean = newContent[
@@ -106,8 +134,9 @@ function App() {
             return item;
           });
           setCurrentContent(newContent);
-        } else if (!form2Boolean) {
-          newContent[`${stage}`].form.formData1.isError = true;
+        }
+        if (!form2Boolean) {
+          newContent[`${stage}`].form.formData2.isError = true;
           newContent[`${stage}`].form.formData2.formList.map((item) => {
             if (item.value === "") {
               item.isError = true;
@@ -115,8 +144,9 @@ function App() {
             return item;
           });
           setCurrentContent(newContent);
-        } else if (!form3Boolean) {
-          newContent[`${stage}`].form.formData1.isError = true;
+        }
+        if (!form3Boolean) {
+          newContent[`${stage}`].form.formData3.isError = true;
           newContent[`${stage}`].form.formData3.formList.map((item) => {
             if (item.value === "") {
               item.isError = true;
@@ -125,6 +155,22 @@ function App() {
           });
           setCurrentContent(newContent);
         } else if (form1Boolean && form2Boolean && form3Boolean) {
+          newContent[`${stage}`].form.formData1.isError = false;
+          newContent[`${stage}`].form.formData1.formList.map((item) => {
+            item.isError = false;
+            return item;
+          });
+          newContent[`${stage}`].form.formData2.isError = false;
+          newContent[`${stage}`].form.formData2.formList.map((item) => {
+            item.isError = false;
+            return item;
+          });
+          newContent[`${stage}`].form.formData3.isError = false;
+          newContent[`${stage}`].form.formData3.formList.map((item) => {
+            item.isError = false;
+            return item;
+          });
+          setCurrentContent(newContent);
           setCurrentStage("stage3");
         }
       } else if (stage === "stage3") {
@@ -151,9 +197,7 @@ function App() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentStage, handleContinue]);
-
   console.log(currentContent);
-
   return (
     <div className="px-5">
       <div className="md:h-14 h-12 bg-white absolute top-0 left-0 w-screen">
@@ -198,6 +242,7 @@ function App() {
           handleOptionChanges={handleOptionChanges}
           handleContinue={handleContinue}
           handleFormChanges={handleFormChanges}
+          handleFormPlainChanges={handleFormPlainChanges}
           dropDownStatus={dropDownStatus}
           alternateDropDown={alternateDropDown}
           handleDropDownChanges={handleDropDownChanges}
