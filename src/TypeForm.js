@@ -163,6 +163,29 @@ function TypeForm({
           <div className=" mt-7 flex flex-col gap-y-9">
             {componentText?.form[`formData${currentNominee}`].formList.map(
               (item, index, array) => {
+                console.log(
+                  currentNominee !== 1 &&
+                    (array.every((item) => {
+                      if (item.type === "dropdown") {
+                        if (item.value === "Choose a nominee relation") {
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      }
+                      return item.value !== "";
+                    }) ||
+                      array.every((item) => {
+                        if (item.type === "dropdown") {
+                          if (item.value === "Choose a nominee relation") {
+                            return true;
+                          } else {
+                            return false;
+                          }
+                        }
+                        return item.value === "";
+                      }))
+                );
                 return (
                   <div key={index}>
                     <p className=" text-lg mb-1 select-none">
