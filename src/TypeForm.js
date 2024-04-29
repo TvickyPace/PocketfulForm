@@ -12,6 +12,7 @@ function TypeForm({
   currentStage,
   handleFormChanges,
   handleFormPlainChanges,
+  isValidEmail,
   dropDownStatus,
   alternateDropDown,
   handleDropDownChanges,
@@ -88,6 +89,13 @@ function TypeForm({
                     item.value === "" && (
                       <p className=" text-red-600 text-sm mt-1 font-medium">
                         {item.error}
+                      </p>
+                    )}
+                  {item.trueType === "email" &&
+                    item.value !== "" &&
+                    !isValidEmail(item.value) && (
+                      <p className=" text-red-600 text-sm mt-1 font-medium">
+                        {item?.invalid}
                       </p>
                     )}
                   {item.type === "dropdown" && (
@@ -233,6 +241,13 @@ function TypeForm({
                       item.value === "" && (
                         <p className=" text-red-600 text-sm mt-1 font-medium">
                           {item.error}
+                        </p>
+                      )}
+                    {item.trueType === "email" &&
+                      item.value !== "" &&
+                      !isValidEmail(item.value) && (
+                        <p className=" text-red-600 text-sm mt-1 font-medium">
+                          {item?.invalid}
                         </p>
                       )}
                     {item.type === "dropdown" && (

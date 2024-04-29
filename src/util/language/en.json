@@ -28,6 +28,7 @@
             "trueType": "email",
             "value": "",
             "error": "Email field is required",
+            "invalid": "Email is in Invalid Formate",
             "isError": false
           },
           {
@@ -98,6 +99,7 @@
               "trueType": "email",
               "value": "",
               "error": "Email field is required",
+              "invalid": "Email is in Invalid Formate",
               "isError": false
             },
             {
@@ -188,6 +190,7 @@
               "trueType": "email",
               "value": "",
               "error": "Email field is required",
+              "invalid": "Email is in Invalid Formate",
               "isError": false
             },
             {
@@ -278,6 +281,7 @@
               "trueType": "email",
               "value": "",
               "error": "Email field is required",
+              "invalid": "Email is in Invalid Formate",
               "isError": false
             },
             {

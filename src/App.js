@@ -3,7 +3,7 @@ import "./App.css";
 import TypeForm from "./TypeForm";
 import getComponentTexts from "./util/functions/functions";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import apiCallFunction from "./util/APIs/services";
+// import apiCallFunction from "./util/APIs/services";
 
 function App() {
   const componentText = getComponentTexts("typeForm");
@@ -59,6 +59,12 @@ function App() {
     setCurrentContent(newContent);
   }
 
+  // handleEmailVerification
+  function isValidEmail(email) {
+    // Regular expression for basic email format validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
   //handle Skip
   function handleSkip(stage) {
     if (stage === "stage2") {
@@ -92,7 +98,12 @@ function App() {
       if (stage === "stage1") {
         const formPlainBoolean = newContent[
           `${stage}`
-        ].formPlain.formList.every((item) => item.value !== "");
+        ].formPlain.formList.every((item) => {
+          if (item.trueType === "email") {
+            return isValidEmail(item.value);
+          }
+          return item.value !== "";
+        });
         if (formPlainBoolean) {
           const stage1ApiBody = {};
           newContent[`${stage}`].formPlain.formList.map((item) => {
@@ -132,6 +143,9 @@ function App() {
               return true;
             }
           }
+          if (item.trueType === "email") {
+            return isValidEmail(item.value);
+          }
           return item.value !== "";
         });
         const form2Boolean =
@@ -142,6 +156,9 @@ function App() {
               } else {
                 return true;
               }
+            }
+            if (item.trueType === "email") {
+              return isValidEmail(item.value);
             }
             return item.value !== "";
           }) ||
@@ -163,6 +180,9 @@ function App() {
               } else {
                 return true;
               }
+            }
+            if (item.trueType === "email") {
+              return isValidEmail(item.value);
             }
             return item.value !== "";
           }) ||
@@ -305,6 +325,7 @@ function App() {
           handleContinue={handleContinue}
           handleFormChanges={handleFormChanges}
           handleFormPlainChanges={handleFormPlainChanges}
+          isValidEmail={isValidEmail}
           dropDownStatus={dropDownStatus}
           alternateDropDown={alternateDropDown}
           handleDropDownChanges={handleDropDownChanges}
