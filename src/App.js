@@ -79,6 +79,11 @@ function App() {
     }
   }
 
+  //handle navigation
+  function handleNavigation(stage) {
+    setCurrentStage(stage);
+  }
+
   //handle continuation
   const handleContinue = useCallback(
     (stage) => {
@@ -88,14 +93,22 @@ function App() {
           `${stage}`
         ].formPlain.formList.every((item) => item.value !== "");
         if (formPlainBoolean) {
+          const stage1ApiBody = {};
           newContent[`${stage}`].formPlain.formList.map((item) => {
+            stage1ApiBody[`${item.key}`] = item.value;
             item.isError = false;
             return item;
           });
           setCurrentContent(newContent);
           if (newContent[`${stage}`].options.value === "Yes") {
+            stage1ApiBody[`opt_in`] = true;
+            stage1ApiBody[`opt_out`] = false;
+            console.log(stage1ApiBody);
             setCurrentStage("stage2");
           } else {
+            stage1ApiBody[`opt_in`] = false;
+            stage1ApiBody[`opt_out`] = true;
+            console.log(stage1ApiBody);
             setCurrentStage("stage3");
           }
         } else {
@@ -244,7 +257,14 @@ function App() {
           {componentText?.allStages?.map((item, index, array) => {
             return (
               <React.Fragment key={index}>
-                <div className="flex items-center gap-1 min-w-max px-3 select-none">
+                <div
+                  className="flex items-center gap-1 min-w-max px-3 select-none cursor-pointer "
+                  onClick={() => {
+                    if (index < Number(currentStage.slice(5))) {
+                      handleNavigation(item.key);
+                    }
+                  }}
+                >
                   {Number(currentStage.slice(5)) > index ? (
                     <CheckCircleRoundedIcon style={{ fontSize: "26px" }} />
                   ) : (
