@@ -109,7 +109,7 @@ function App() {
           } else {
             stage1ApiBody[`opt_in`] = false;
             stage1ApiBody[`opt_out`] = true;
-            console.log(stage1ApiBody);
+            // apiCallFunction("http://127.0.0.1:5000/user-info", stage1ApiBody);
             setCurrentStage("stage3");
           }
         } else {
@@ -212,21 +212,26 @@ function App() {
           });
           setCurrentContent(newContent);
         } else if (form1Boolean && form2Boolean && form3Boolean) {
+          const stage2ApiBody = {};
           newContent[`${stage}`].form.formData1.isError = false;
           newContent[`${stage}`].form.formData1.formList.map((item) => {
+            stage2ApiBody[`${item.key}`] = item.value;
             item.isError = false;
             return item;
           });
           newContent[`${stage}`].form.formData2.isError = false;
           newContent[`${stage}`].form.formData2.formList.map((item) => {
+            stage2ApiBody[`${item.key}`] = item.value;
             item.isError = false;
             return item;
           });
           newContent[`${stage}`].form.formData3.isError = false;
           newContent[`${stage}`].form.formData3.formList.map((item) => {
+            stage2ApiBody[`${item.key}`] = item.value;
             item.isError = false;
             return item;
           });
+          console.log(stage2ApiBody);
           setCurrentContent(newContent);
           setCurrentStage("stage3");
         }

@@ -59,6 +59,20 @@ function TypeForm({
                         } else if (item.trueType === "number") {
                           // Allow only digits
                           newValue = newValue.replace(/\D/g, "");
+                        } else if (item.trueType === "email") {
+                          // Validate email format
+                          // This regex pattern is a simple one and may not cover all valid email formats.
+                          const textWithEmailPattern = /^[a-zA-Z0-9@.]*$/;
+                          if (!textWithEmailPattern.test(newValue)) {
+                            // If the entered email format is invalid, do not update the value
+                            return;
+                          }
+                        } else if (item.trueType === "address") {
+                          // Allow text, numbers, and spaces
+                          newValue = newValue.replace(/[^a-zA-Z0-9,\s]/g, "");
+                        } else if (item.trueType === "id") {
+                          // Allow text, numbers, and spaces
+                          newValue = newValue.replace(/[^a-zA-Z0-9\s]/g, "");
                         }
                         handleFormPlainChanges(newValue, item.key);
                       }}
@@ -195,6 +209,20 @@ function TypeForm({
                           } else if (item.trueType === "number") {
                             // Allow only digits
                             newValue = newValue.replace(/\D/g, "");
+                          } else if (item.trueType === "email") {
+                            // Validate email format
+                            // This regex pattern is a simple one and may not cover all valid email formats.
+                            const textWithEmailPattern = /^[a-zA-Z0-9@.]*$/;
+                            if (!textWithEmailPattern.test(newValue)) {
+                              // If the entered email format is invalid, do not update the value
+                              return;
+                            }
+                          } else if (item.trueType === "address") {
+                            // Allow text, numbers, and spaces
+                            newValue = newValue.replace(/[^a-zA-Z0-9,\s]/g, "");
+                          } else if (item.trueType === "id") {
+                            // Allow text, numbers, and spaces
+                            newValue = newValue.replace(/[^a-zA-Z0-9\s]/g, "");
                           }
                           handleFormChanges(newValue, item.key);
                         }}
