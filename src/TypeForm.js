@@ -51,9 +51,17 @@ function TypeForm({
                       type="text"
                       placeholder={item.placeHolder}
                       value={item.value}
-                      onChange={(e) =>
-                        handleFormPlainChanges(e.target.value, item.key)
-                      }
+                      onChange={(e) => {
+                        let newValue = e.target.value;
+                        if (item.trueType === "text") {
+                          // Allow only alphabets and spaces
+                          newValue = newValue.replace(/[^A-Za-z\s]/g, "");
+                        } else if (item.trueType === "number") {
+                          // Allow only digits
+                          newValue = newValue.replace(/\D/g, "");
+                        }
+                        handleFormPlainChanges(newValue, item.key);
+                      }}
                       className={`w-full bg-transparent border-b-[1px] ${
                         item.isError && item.value === ""
                           ? "border-red-600 border-opacity-80"
@@ -174,14 +182,22 @@ function TypeForm({
                         type="text"
                         placeholder={item.placeHolder}
                         value={item.value}
-                        onChange={(e) =>
-                          handleFormChanges(e.target.value, item.key)
-                        }
                         className={`w-full bg-transparent border-b-[1px] ${
                           item.isError && item.value === ""
                             ? "border-red-600 border-opacity-80"
                             : "border-dark-black border-opacity-30"
                         }   focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl`}
+                        onChange={(e) => {
+                          let newValue = e.target.value;
+                          if (item.trueType === "text") {
+                            // Allow only alphabets and spaces
+                            newValue = newValue.replace(/[^A-Za-z\s]/g, "");
+                          } else if (item.trueType === "number") {
+                            // Allow only digits
+                            newValue = newValue.replace(/\D/g, "");
+                          }
+                          handleFormChanges(newValue, item.key);
+                        }}
                       />
                     )}
                     {item.isError &&

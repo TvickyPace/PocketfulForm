@@ -3,6 +3,7 @@ import "./App.css";
 import TypeForm from "./TypeForm";
 import getComponentTexts from "./util/functions/functions";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import apiCallFunction from "./util/APIs/services";
 
 function App() {
   const componentText = getComponentTexts("typeForm");
@@ -103,7 +104,7 @@ function App() {
           if (newContent[`${stage}`].options.value === "Yes") {
             stage1ApiBody[`opt_in`] = true;
             stage1ApiBody[`opt_out`] = false;
-            console.log(stage1ApiBody);
+            // apiCallFunction("http://127.0.0.1:5000/user-info", stage1ApiBody);
             setCurrentStage("stage2");
           } else {
             stage1ApiBody[`opt_in`] = false;
