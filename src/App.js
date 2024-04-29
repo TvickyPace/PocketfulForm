@@ -235,23 +235,32 @@ function App() {
           const stage2ApiBody = {};
           newContent[`${stage}`].form.formData1.isError = false;
           newContent[`${stage}`].form.formData1.formList.map((item) => {
-            stage2ApiBody[`${item.key}`] = item.value;
+            stage2ApiBody[`${item.key}`] =
+              item.value !== "" && item.value !== "Choose a nominee relation"
+                ? item.value
+                : "NA";
             item.isError = false;
             return item;
           });
           newContent[`${stage}`].form.formData2.isError = false;
           newContent[`${stage}`].form.formData2.formList.map((item) => {
-            stage2ApiBody[`${item.key}`] = item.value;
+            stage2ApiBody[`${item.key}`] =
+              item.value !== "" && item.value !== "Choose a nominee relation"
+                ? item.value
+                : "NA";
             item.isError = false;
             return item;
           });
           newContent[`${stage}`].form.formData3.isError = false;
           newContent[`${stage}`].form.formData3.formList.map((item) => {
-            stage2ApiBody[`${item.key}`] = item.value;
+            stage2ApiBody[`${item.key}`] =
+              item.value !== "" && item.value !== "Choose a nominee relation"
+                ? item.value
+                : "NA";
             item.isError = false;
             return item;
           });
-          console.log(stage2ApiBody);
+          // console.log(stage2ApiBody);
           setCurrentContent(newContent);
           setCurrentStage("stage3");
         }
