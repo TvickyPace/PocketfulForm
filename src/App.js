@@ -223,10 +223,6 @@ function App() {
     [currentContent]
   );
 
-  function navigateStage(stage) {
-    setCurrentStage(stage);
-  }
-
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
@@ -240,7 +236,7 @@ function App() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentStage, handleContinue]);
-  console.log(currentContent);
+
   return (
     <div className="px-5">
       <div className="md:h-14 h-12 bg-white absolute top-0 left-0 w-screen">
@@ -248,10 +244,7 @@ function App() {
           {componentText?.allStages?.map((item, index, array) => {
             return (
               <React.Fragment key={index}>
-                <div
-                  className="flex items-center gap-1 min-w-max px-3 cursor-pointer select-none"
-                  onClick={() => navigateStage(item.key)}
-                >
+                <div className="flex items-center gap-1 min-w-max px-3 select-none">
                   {Number(currentStage.slice(5)) > index ? (
                     <CheckCircleRoundedIcon style={{ fontSize: "26px" }} />
                   ) : (
