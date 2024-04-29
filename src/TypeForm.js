@@ -286,7 +286,9 @@ function TypeForm({
                   componentText.form[`formData${item}`].isError
                     ? "text-red-600 border border-red-600 "
                     : "text-dark-black"
-                } bg-slate-200 cursor-pointer   text-xl py-1 px-3.5 rounded-md font-medium flex items-center gap-1.5 hover:bg-dark-black  hover:text-light-background`}
+                } ${
+                  item === currentNominee ? "bg-[#cbd9ec]" : "bg-slate-200"
+                }  cursor-pointer   text-xl py-1 px-3.5 rounded-md font-medium flex items-center gap-1.5 hover:bg-dark-black  hover:text-light-background`}
                 onClick={() => changeCurrentNominee(item)}
               >
                 {item}
