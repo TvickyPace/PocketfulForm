@@ -80,7 +80,9 @@ function TypeForm({
                         handleFormPlainChanges(newValue, item.key);
                       }}
                       className={`w-full bg-transparent border-b-[1px] ${
-                        item.isError && item.value === ""
+                        item.isError &&
+                        item.value === "" &&
+                        !currentParams[`${item.key}`]
                           ? "border-red-600 border-opacity-80"
                           : "border-dark-black border-opacity-30"
                       }   focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl ${
@@ -90,7 +92,8 @@ function TypeForm({
                   )}
                   {item.isError &&
                     item.type === "text" &&
-                    item.value === "" && (
+                    item.value === "" &&
+                    !currentParams[`${item.key}`] && (
                       <p className=" text-red-600 text-sm mt-1 font-medium">
                         {item.error}
                       </p>
@@ -188,12 +191,15 @@ function TypeForm({
       )}
       {componentText?.form && (
         <div>
-          <p className="text-xl flex items-center gap-2">
-            {componentText?.form?.heading}{" "}
-            <span className="bg-dark-black rounded-full text-slate-50 w-5 h-5 flex items-center justify-center text-base">
-              {currentNominee}
-            </span>
-          </p>
+          <div className="flex justify-between items-center">
+            <p className="text-xl flex items-center gap-2">
+              {componentText?.form?.heading}{" "}
+              <span className="bg-dark-black rounded-full text-slate-50 w-5 h-5 flex items-center justify-center text-base">
+                {currentNominee}
+              </span>
+            </p>
+          </div>
+
           <div className=" mt-7 flex flex-col gap-y-9">
             {componentText?.form[`formData${currentNominee}`].formList.map(
               (item, index) => {
