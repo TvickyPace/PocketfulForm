@@ -200,7 +200,7 @@ function TypeForm({
                 {currentNominee}
               </span>
             </p>
-            <button className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black" >
+            <button className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black" onClick={clearNomineeForm} >
               Clear Details
               <DeleteForeverRoundedIcon />
             </button>

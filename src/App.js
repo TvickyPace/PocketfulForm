@@ -53,18 +53,18 @@ function App() {
   }
 
   //form clear function
-  function clearNomineeForm(nominee) {
+  function clearNomineeForm() {
     const newContent = JSON.parse(JSON.stringify(currentContent));
-    newContent[`${currentStage}`].form[`formData${nominee}`].formList.map(
-      (item) => {
-        if (item.type === "dropdown") {
-          return (item.value = "Choose a nominee relation");
-        } else {
-          item.value = "";
-        }
-        return item;
+    newContent[`${currentStage}`].form[
+      `formData${currentNominee}`
+    ].formList.map((item) => {
+      if (item.type === "dropdown") {
+        return (item.value = "Choose a nominee relation");
+      } else {
+        item.value = "";
       }
-    );
+      return item;
+    });
   }
 
   const handleFormPlainChanges = useCallback(
