@@ -28,7 +28,7 @@ function TypeForm({
       {currentStage !== "stage4" && (
         <div
           className={`text-md font-bold lg:flex items-center gap-[1px] absolute -left-10 hidden ${
-            currentStage === "stage1" ? "top-1.5" : "top-[1px]"
+            currentStage === "stage1" ? "top-1.5" : "top-[8px]"
           } `}
         >
           <p>{Number(currentStage.slice(5))}</p>
@@ -200,7 +200,10 @@ function TypeForm({
                 {currentNominee}
               </span>
             </p>
-            <button className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black" onClick={clearNomineeForm} >
+            <button
+              className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black"
+              onClick={clearNomineeForm}
+            >
               Clear Details
               <DeleteForeverRoundedIcon />
             </button>

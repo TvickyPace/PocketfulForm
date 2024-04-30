@@ -12,6 +12,7 @@ function App() {
   const [dropDownStatus, setDropDownStatus] = useState(false);
   const [currentNominee, setCurrentNominee] = useState(1);
   const [currentParams, setCurrentParams] = useState({});
+  const [optOutResponse, setOptResponse] = useState({});
 
   //nominee functions
   function changeCurrentNominee(value) {
@@ -114,9 +115,10 @@ function App() {
 
   //handle continuation
   const handleContinue = useCallback(
-    (stage) => {
+    async (stage) => {
       const stage1ApiBody = {};
       const stage2ApiBody = {};
+      const optOutNewResponse = {};
       const newContent = JSON.parse(JSON.stringify(currentContent));
       if (stage === "stage1") {
         const formPlainBoolean = newContent[
@@ -156,7 +158,18 @@ function App() {
           } else {
             stage1ApiBody[`opt_in`] = false;
             stage1ApiBody[`opt_out`] = true;
-            apiCallFunction("http://eform.pacefin.in/user-info", stage1ApiBody);
+            const optOutResponse = await apiCallFunction(
+              "http://eform.pacefin.in/user-info",
+              stage1ApiBody
+            );
+
+            const currentResponse = optOutResponse.data.response.response;
+            optOutNewResponse[`entity_id`] =
+              currentResponse.access_token.entity_id;
+            optOutNewResponse[`callback_id`] = currentResponse.callback;
+            optOutNewResponse[`email`] = stage1ApiBody.email;
+            optOutNewResponse[`token_id`] = currentResponse.access_token.id;
+            setOptResponse(optOutNewResponse);
             setCurrentStage("stage3");
           }
         } else {
@@ -376,6 +389,8 @@ function App() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentStage, handleContinue]);
+
+  console.log(optOutResponse);
 
   return (
     <>
