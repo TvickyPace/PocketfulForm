@@ -43,17 +43,6 @@
             "isError": false
           },
           {
-            "key": "dp_id",
-            "label": "DP ID",
-            "placeHolder": "1234567891234567",
-            "required": true,
-            "type": "text",
-            "trueType": "id",
-            "value": "",
-            "error": "DP ID is required",
-            "isError": false
-          },
-          {
             "key": "client_id",
             "label": "Client ID",
             "placeHolder": "01234567",
@@ -162,6 +151,7 @@
               "trueType": "number",
               "value": "",
               "error": "Nominee percentage is required",
+              "invalid": "The percentage should not exceed 100 percent",
               "isError": false
             }
           ]

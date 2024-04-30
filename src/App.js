@@ -59,12 +59,18 @@ function App() {
     setCurrentContent(newContent);
   }
 
-  // handleEmailVerification
+  // handle EmailVerification
   function isValidEmail(email) {
     // Regular expression for basic email format validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   }
+
+  //handle PercentageValidation
+  function percentageValidation(value) {
+    return Number(value) > 100;
+  }
+
   //handle Skip
   function handleSkip(stage) {
     if (stage === "stage2") {
@@ -107,6 +113,9 @@ function App() {
         if (formPlainBoolean) {
           const stage1ApiBody = {};
           newContent[`${stage}`].formPlain.formList.map((item) => {
+            if (item.key === "client_id") {
+              stage1ApiBody[`dp_id`] = item.value;
+            }
             stage1ApiBody[`${item.key}`] = item.value;
             item.isError = false;
             return item;
@@ -116,11 +125,13 @@ function App() {
             stage1ApiBody[`opt_in`] = true;
             stage1ApiBody[`opt_out`] = false;
             // apiCallFunction("http://127.0.0.1:5000/user-info", stage1ApiBody);
+            console.log(stage1ApiBody);
             setCurrentStage("stage2");
           } else {
             stage1ApiBody[`opt_in`] = false;
             stage1ApiBody[`opt_out`] = true;
             // apiCallFunction("http://eform.pacefin.in/user-info", stage1ApiBody);
+            console.log(stage1ApiBody);
             setCurrentStage("stage3");
           }
         } else {
@@ -146,6 +157,9 @@ function App() {
           if (item.trueType === "email") {
             return isValidEmail(item.value);
           }
+          if (item.key === "nominee1_share") {
+            return !percentageValidation(item.value);
+          }
           return item.value !== "";
         });
         const form2Boolean =
@@ -159,6 +173,9 @@ function App() {
             }
             if (item.trueType === "email") {
               return isValidEmail(item.value);
+            }
+            if (item.key === "nominee1_share") {
+              return !percentageValidation(item.value);
             }
             return item.value !== "";
           }) ||
@@ -183,6 +200,9 @@ function App() {
             }
             if (item.trueType === "email") {
               return isValidEmail(item.value);
+            }
+            if (item.key === "nominee1_share") {
+              return !percentageValidation(item.value);
             }
             return item.value !== "";
           }) ||
@@ -342,6 +362,7 @@ function App() {
               handleFormChanges={handleFormChanges}
               handleFormPlainChanges={handleFormPlainChanges}
               isValidEmail={isValidEmail}
+              percentageValidation={percentageValidation}
               dropDownStatus={dropDownStatus}
               alternateDropDown={alternateDropDown}
               handleDropDownChanges={handleDropDownChanges}

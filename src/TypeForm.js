@@ -13,6 +13,7 @@ function TypeForm({
   handleFormChanges,
   handleFormPlainChanges,
   isValidEmail,
+  percentageValidation,
   dropDownStatus,
   alternateDropDown,
   handleDropDownChanges,
@@ -246,6 +247,13 @@ function TypeForm({
                     {item.trueType === "email" &&
                       item.value !== "" &&
                       !isValidEmail(item.value) && (
+                        <p className=" text-red-600 text-sm mt-1 font-medium">
+                          {item?.invalid}
+                        </p>
+                      )}{" "}
+                    {item.key === "nominee1_share" &&
+                      item.value !== "" &&
+                      percentageValidation(item.value) && (
                         <p className=" text-red-600 text-sm mt-1 font-medium">
                           {item?.invalid}
                         </p>
