@@ -457,6 +457,7 @@ function App() {
               currentNominee={currentNominee}
               handleSkip={handleSkip}
               currentParams={currentParams}
+              optOutResponse={optOutResponse}
             />
           </div>
         </div>

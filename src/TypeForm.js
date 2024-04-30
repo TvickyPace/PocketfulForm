@@ -22,7 +22,9 @@ function TypeForm({
   changeCurrentNominee,
   handleSkip,
   currentParams,
+  optOutResponse,
 }) {
+  console.log(optOutResponse);
   return (
     <div className=" w-full relative flex flex-col gap-y-6 ">
       {currentStage !== "stage4" && (
@@ -340,8 +342,8 @@ function TypeForm({
         <div>
           <p className="text-xl">{componentText?.iframe?.heading}</p>
           <iframe
-            className=" mt-7 w-full h-96 border-2 border-dark-black rounded-xl"
-            src={componentText?.iframe?.src}
+            className=" mt-7 w-full h-[700px] border-2 border-dark-black rounded-xl"
+            src={`https://app.digio.in/#/gateway/login/${optOutResponse.entity_id}/${optOutResponse.callback_id}/${optOutResponse.email}?token_id=${optOutResponse.token_id}`}
             title={componentText?.iframe?.title}
           ></iframe>
         </div>
@@ -375,7 +377,7 @@ function TypeForm({
           })}
         </div>
       )}
-      {currentStage !== "stage4" && (
+      {currentStage !== "stage4" && currentStage !== "stage3" && (
         <div className=" mt-7 flex items-center justify-between flex-wrap gap-x-2 gap-y-5">
           <div className="flex gap-3 items-center">
             <button
