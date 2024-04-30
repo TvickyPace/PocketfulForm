@@ -11,6 +11,7 @@ function App() {
   const [currentContent, setCurrentContent] = useState(componentText);
   const [dropDownStatus, setDropDownStatus] = useState(false);
   const [currentNominee, setCurrentNominee] = useState(1);
+  const [currentParams, setCurrentParams] = useState({});
 
   //nominee functions
   function changeCurrentNominee(value) {
@@ -51,24 +52,22 @@ function App() {
     setCurrentContent(newContent);
   }
 
-  function handleFormPlainChanges(value, key) {
-    const newContent = JSON.parse(JSON.stringify(currentContent));
-    newContent[`${currentStage}`].formPlain.formList.filter(
-      (item) => item.key === key
-    )[0].value = value;
-    setCurrentContent(newContent);
-  }
+  const handleFormPlainChanges = useCallback(
+    (value, key) => {
+      const newContent = JSON.parse(JSON.stringify(currentContent));
+      newContent[`${currentStage}`].formPlain.formList.filter(
+        (item) => item.key === key
+      )[0].value = value;
+      setCurrentContent(newContent);
+    },
+    [currentContent, currentStage]
+  );
 
   // handle EmailVerification
   function isValidEmail(email) {
     // Regular expression for basic email format validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
-  }
-
-  //handle PercentageValidation
-  function percentageValidation(value) {
-    return Number(value) > 100;
   }
 
   //handle Skip
@@ -105,18 +104,30 @@ function App() {
         const formPlainBoolean = newContent[
           `${stage}`
         ].formPlain.formList.every((item) => {
-          if (item.trueType === "email") {
-            return isValidEmail(item.value);
+          if (currentParams[`${item.key}`]) {
+            return true;
+          } else {
+            if (item.trueType === "email") {
+              return isValidEmail(item.value);
+            }
+            return item.value !== "";
           }
-          return item.value !== "";
         });
         if (formPlainBoolean) {
           const stage1ApiBody = {};
           newContent[`${stage}`].formPlain.formList.map((item) => {
-            if (item.key === "client_id") {
-              stage1ApiBody[`dp_id`] = item.value;
+            if (currentParams[`${item.key}`]) {
+              if (item.key === "dp_id") {
+                stage1ApiBody[`client_id`] = currentParams[`${item.key}`];
+              }
+              stage1ApiBody[`${item.key}`] = currentParams[`${item.key}`];
+            } else {
+              if (item.key === "dp_id") {
+                stage1ApiBody[`client_id`] = item.value;
+              }
+              stage1ApiBody[`${item.key}`] = item.value;
             }
-            stage1ApiBody[`${item.key}`] = item.value;
+
             item.isError = false;
             return item;
           });
@@ -157,9 +168,6 @@ function App() {
           if (item.trueType === "email") {
             return isValidEmail(item.value);
           }
-          if (item.key === "nominee1_share") {
-            return !percentageValidation(item.value);
-          }
           return item.value !== "";
         });
         const form2Boolean =
@@ -174,9 +182,6 @@ function App() {
             if (item.trueType === "email") {
               return isValidEmail(item.value);
             }
-            if (item.key === "nominee1_share") {
-              return !percentageValidation(item.value);
-            }
             return item.value !== "";
           }) ||
           newContent[`${stage}`].form.formData2.formList.every((item) => {
@@ -189,6 +194,21 @@ function App() {
             }
             return item.value === "";
           });
+        const form2SimpleBoolean = newContent[
+          `${stage}`
+        ].form.formData2.formList.every((item) => {
+          if (item.type === "dropdown") {
+            if (item.value === "Choose a nominee relation") {
+              return false;
+            } else {
+              return true;
+            }
+          }
+          if (item.trueType === "email") {
+            return isValidEmail(item.value);
+          }
+          return item.value !== "";
+        });
         const form3Boolean =
           newContent[`${stage}`].form.formData3.formList.every((item) => {
             if (item.type === "dropdown") {
@@ -200,9 +220,6 @@ function App() {
             }
             if (item.trueType === "email") {
               return isValidEmail(item.value);
-            }
-            if (item.key === "nominee1_share") {
-              return !percentageValidation(item.value);
             }
             return item.value !== "";
           }) ||
@@ -216,6 +233,21 @@ function App() {
             }
             return item.value === "";
           });
+        const form3SimpleBoolean = newContent[
+          `${stage}`
+        ].form.formData3.formList.every((item) => {
+          if (item.type === "dropdown") {
+            if (item.value === "Choose a nominee relation") {
+              return false;
+            } else {
+              return true;
+            }
+          }
+          if (item.trueType === "email") {
+            return isValidEmail(item.value);
+          }
+          return item.value !== "";
+        });
         if (!form1Boolean) {
           newContent[`${stage}`].form.formData1.isError = true;
           newContent[`${stage}`].form.formData1.formList.map((item) => {
@@ -280,16 +312,43 @@ function App() {
             item.isError = false;
             return item;
           });
-          // console.log(stage2ApiBody);
-          setCurrentContent(newContent);
+          if (form2SimpleBoolean && form3SimpleBoolean) {
+            stage2ApiBody[`nominee1_share`] = 33;
+            stage2ApiBody[`nominee2_share`] = 33;
+            stage2ApiBody[`nominee3_share`] = 33;
+          } else if (form2SimpleBoolean || form3SimpleBoolean) {
+            if (form2SimpleBoolean) {
+              stage2ApiBody[`nominee1_share`] = 50;
+              stage2ApiBody[`nominee2_share`] = 50;
+            }
+            if (form3SimpleBoolean) {
+              stage2ApiBody[`nominee1_share`] = 50;
+              stage2ApiBody[`nominee3_share`] = 50;
+            }
+          } else if (!form2SimpleBoolean && !form3SimpleBoolean) {
+            stage2ApiBody[`nominee1_share`] = 100;
+          }
+          console.log(stage2ApiBody);
           setCurrentStage("stage3");
         }
       } else if (stage === "stage3") {
         setCurrentStage("stage4");
       }
     },
-    [currentContent]
+    [currentContent, currentParams]
   );
+
+  useEffect(() => {
+    const paramsObject = {};
+    window.location.search
+      .slice(1)
+      .split("&")
+      .forEach((item) => {
+        const paramArray = item.split("=");
+        paramsObject[`${paramArray[0]}`] = paramArray[1];
+      });
+    setCurrentParams(paramsObject);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -362,13 +421,13 @@ function App() {
               handleFormChanges={handleFormChanges}
               handleFormPlainChanges={handleFormPlainChanges}
               isValidEmail={isValidEmail}
-              percentageValidation={percentageValidation}
               dropDownStatus={dropDownStatus}
               alternateDropDown={alternateDropDown}
               handleDropDownChanges={handleDropDownChanges}
               changeCurrentNominee={changeCurrentNominee}
               currentNominee={currentNominee}
               handleSkip={handleSkip}
+              currentParams={currentParams}
             />
           </div>
         </div>

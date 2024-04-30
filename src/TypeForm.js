@@ -13,13 +13,13 @@ function TypeForm({
   handleFormChanges,
   handleFormPlainChanges,
   isValidEmail,
-  percentageValidation,
   dropDownStatus,
   alternateDropDown,
   handleDropDownChanges,
   currentNominee,
   changeCurrentNominee,
   handleSkip,
+  currentParams,
 }) {
   return (
     <div className=" w-full relative flex flex-col gap-y-6 ">
@@ -35,7 +35,7 @@ function TypeForm({
       )}
       {currentStage === "stage1" && (
         <p className=" text-[24px]">
-          Hello, <span className=" font-semibold">Vikas</span>
+          Hello, <span className=" font-semibold">{currentParams.name}</span>
         </p>
       )}{" "}
       {componentText?.formPlain && (
@@ -51,8 +51,9 @@ function TypeForm({
                   {item.type === "text" && (
                     <input
                       type="text"
+                      disabled={currentParams[`${item.key}`]}
                       placeholder={item.placeHolder}
-                      value={item.value}
+                      value={item.value || currentParams[`${item.key}`]}
                       onChange={(e) => {
                         let newValue = e.target.value;
                         if (item.trueType === "text") {
@@ -82,7 +83,9 @@ function TypeForm({
                         item.isError && item.value === ""
                           ? "border-red-600 border-opacity-80"
                           : "border-dark-black border-opacity-30"
-                      }   focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl`}
+                      }   focus:outline-none focus:border-opacity-100 focus:border-b-2 py-2 text-2xl ${
+                        currentParams[`${item.key}`] && "text-slate-800"
+                      }`}
                     />
                   )}
                   {item.isError &&
@@ -251,13 +254,6 @@ function TypeForm({
                           {item?.invalid}
                         </p>
                       )}{" "}
-                    {item.key === "nominee1_share" &&
-                      item.value !== "" &&
-                      percentageValidation(item.value) && (
-                        <p className=" text-red-600 text-sm mt-1 font-medium">
-                          {item?.invalid}
-                        </p>
-                      )}
                     {item.type === "dropdown" && (
                       <div className=" relative">
                         <div

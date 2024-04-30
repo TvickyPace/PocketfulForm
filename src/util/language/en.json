@@ -1,9 +1,9 @@
 {
   "typeForm": {
     "allStages": [
-      { "key": "stage1", "heading": "Stage 1" },
-      { "key": "stage2", "heading": "Stage 2" },
-      { "key": "stage3", "heading": "Stage 3" }
+      { "key": "stage1", "heading": "Basic Details" },
+      { "key": "stage2", "heading": "Nominee Details" },
+      { "key": "stage3", "heading": "E-Sign" }
     ],
     "stage1": {
       "formPlain": {
@@ -43,14 +43,14 @@
             "isError": false
           },
           {
-            "key": "client_id",
-            "label": "Client ID",
+            "key": "dp_id",
+            "label": "DP ID",
             "placeHolder": "01234567",
             "required": true,
             "type": "text",
             "trueType": "id",
             "value": "",
-            "error": "Client ID is required",
+            "error": "DP ID is required",
             "isError": false
           }
         ]
@@ -141,18 +141,6 @@
               "value": "",
               "error": "Address is required",
               "isError": false
-            },
-            {
-              "key": "nominee1_share",
-              "label": "Percentage",
-              "placeHolder": "25",
-              "required": true,
-              "type": "text",
-              "trueType": "number",
-              "value": "",
-              "error": "Nominee percentage is required",
-              "invalid": "The percentage should not exceed 100 percent",
-              "isError": false
             }
           ]
         },
@@ -233,17 +221,6 @@
               "value": "",
               "error": "Address is required",
               "isError": false
-            },
-            {
-              "key": "nominee2_share",
-              "label": "Percentage",
-              "placeHolder": "25",
-              "required": true,
-              "type": "text",
-              "trueType": "number",
-              "value": "",
-              "error": "Nominee percentage is required",
-              "isError": false
             }
           ]
         },
@@ -323,17 +300,6 @@
               "trueType": "address",
               "value": "",
               "error": "Address is required",
-              "isError": false
-            },
-            {
-              "key": "nominee3_share",
-              "label": "Percentage",
-              "placeHolder": "25",
-              "required": true,
-              "type": "text",
-              "trueType": "number",
-              "value": "",
-              "error": "Nominee percentage is required",
               "isError": false
             }
           ]
