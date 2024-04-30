@@ -120,7 +120,7 @@ function App() {
           } else {
             stage1ApiBody[`opt_in`] = false;
             stage1ApiBody[`opt_out`] = true;
-            // apiCallFunction("http://127.0.0.1:5000/user-info", stage1ApiBody);
+            // apiCallFunction("http://eform.pacefin.in/user-info", stage1ApiBody);
             setCurrentStage("stage3");
           }
         } else {
@@ -286,14 +286,19 @@ function App() {
   }, [currentStage, handleContinue]);
 
   return (
-    <div className="px-5">
-      <div className="md:h-14 h-12 bg-white absolute top-0 left-0 w-screen">
+    <>
+      <div className=" bg-white px-1 relative navMax:py-6 sm:pt-[80px] pt-[69px] sm:pb-5 pb-4 ">
+        <img
+          src="https://www.pacefin.com/images/Logo_default.png"
+          alt="pace logo"
+          className="absolute navMax:left-5 navMax:top-1/2 navMax:-translate-y-1/2 navMax:translate-x-0 navMax:w-28 left-1/2 -translate-x-1/2 top-5 sm:w-[120px] w-[90px] "
+        />
         <div className="max-w-[720px] ml-auto mr-auto h-full flex items-center justify-between">
           {componentText?.allStages?.map((item, index, array) => {
             return (
               <React.Fragment key={index}>
                 <div
-                  className="flex items-center gap-1 min-w-max px-3 select-none cursor-pointer "
+                  className="flex items-center gap-1 min-w-max px-2 select-none cursor-pointer "
                   onClick={() => {
                     if (index < Number(currentStage.slice(5))) {
                       handleNavigation(item.key);
@@ -326,24 +331,28 @@ function App() {
           })}
         </div>
       </div>
-      <div className=" min-h-screen max-w-[720px] ml-auto mr-auto flex items-center py-24">
-        <TypeForm
-          currentStage={currentStage}
-          componentText={currentContent[`${currentStage}`]}
-          handleOptionChanges={handleOptionChanges}
-          handleContinue={handleContinue}
-          handleFormChanges={handleFormChanges}
-          handleFormPlainChanges={handleFormPlainChanges}
-          isValidEmail={isValidEmail}
-          dropDownStatus={dropDownStatus}
-          alternateDropDown={alternateDropDown}
-          handleDropDownChanges={handleDropDownChanges}
-          changeCurrentNominee={changeCurrentNominee}
-          currentNominee={currentNominee}
-          handleSkip={handleSkip}
-        />
+      <div className="px-5">
+        <div className=" min-h-screen max-w-[720px] ml-auto mr-auto py-14 flex items-center">
+          <div className="mt-auto mb-auto w-full">
+            <TypeForm
+              currentStage={currentStage}
+              componentText={currentContent[`${currentStage}`]}
+              handleOptionChanges={handleOptionChanges}
+              handleContinue={handleContinue}
+              handleFormChanges={handleFormChanges}
+              handleFormPlainChanges={handleFormPlainChanges}
+              isValidEmail={isValidEmail}
+              dropDownStatus={dropDownStatus}
+              alternateDropDown={alternateDropDown}
+              handleDropDownChanges={handleDropDownChanges}
+              changeCurrentNominee={changeCurrentNominee}
+              currentNominee={currentNominee}
+              handleSkip={handleSkip}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

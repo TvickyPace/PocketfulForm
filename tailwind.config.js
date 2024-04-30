@@ -8,6 +8,9 @@ module.exports = {
         "light-dark-black": "#3c3c3c",
         "light-background": "#f0f0f0",
       },
+      screens: {
+        navMax: "1024px",
+      },
     },
   },
   plugins: [],
