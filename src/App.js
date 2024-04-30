@@ -52,6 +52,21 @@ function App() {
     setCurrentContent(newContent);
   }
 
+  //form clear function
+  function clearNomineeForm(nominee) {
+    const newContent = JSON.parse(JSON.stringify(currentContent));
+    newContent[`${currentStage}`].form[`formData${nominee}`].formList.map(
+      (item) => {
+        if (item.type === "dropdown") {
+          return (item.value = "Choose a nominee relation");
+        } else {
+          item.value = "";
+        }
+        return item;
+      }
+    );
+  }
+
   const handleFormPlainChanges = useCallback(
     (value, key) => {
       const newContent = JSON.parse(JSON.stringify(currentContent));
@@ -416,6 +431,7 @@ function App() {
               handleOptionChanges={handleOptionChanges}
               handleContinue={handleContinue}
               handleFormChanges={handleFormChanges}
+              clearNomineeForm={clearNomineeForm}
               handleFormPlainChanges={handleFormPlainChanges}
               isValidEmail={isValidEmail}
               dropDownStatus={dropDownStatus}

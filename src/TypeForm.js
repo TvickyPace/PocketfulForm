@@ -4,6 +4,7 @@ import SubdirectoryArrowLeftSharpIcon from "@mui/icons-material/SubdirectoryArro
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
 function TypeForm({
   componentText,
@@ -11,6 +12,7 @@ function TypeForm({
   handleContinue,
   currentStage,
   handleFormChanges,
+  clearNomineeForm,
   handleFormPlainChanges,
   isValidEmail,
   dropDownStatus,
@@ -198,6 +200,10 @@ function TypeForm({
                 {currentNominee}
               </span>
             </p>
+            <button className=" bg-dark-black text-slate-50 text-xl py-1.5 px-4 rounded font-medium flex items-center gap-1 hover:bg-light-dark-black" >
+              Clear Details
+              <DeleteForeverRoundedIcon />
+            </button>
           </div>
 
           <div className=" mt-7 flex flex-col gap-y-9">
