@@ -371,19 +371,18 @@ function App() {
           });
           stage2ApiBody[`opt_in`] = true;
           stage2ApiBody[`opt_out`] = false;
-          console.log(stage2ApiBody);
-          // const optOutResponse = await apiCallFunction(
-          //   "http://eform.pacefin.in/nominee-info",
-          //   stage2ApiBody
-          // );
-          // console.log(optOutResponse);
-          //  const currentResponse = optOutResponse.data.response.response;
-          //  optOutNewResponse[`entity_id`] =
-          //    currentResponse.access_token.entity_id;
-          //  optOutNewResponse[`callback_id`] = currentResponse.callback;
-          //  optOutNewResponse[`email`] = stage1ApiBody.email;
-          //  optOutNewResponse[`token_id`] = currentResponse.access_token.id;
-          //  setOptResponse(optOutNewResponse);
+          const optOutResponse = await apiCallFunction(
+            "http://eform.pacefin.in/nominee-info",
+            stage2ApiBody
+          );
+          console.log(optOutResponse);
+          const currentResponse = optOutResponse.data.response;
+          optOutNewResponse[`entity_id`] =
+            currentResponse.access_token.entity_id;
+          optOutNewResponse[`callback_id`] = currentResponse.callback;
+          optOutNewResponse[`email`] = stage2ApiBody.email;
+          optOutNewResponse[`token_id`] = currentResponse.access_token.id;
+          setOptResponse(optOutNewResponse);
           setCurrentStage("stage3");
         }
       }
