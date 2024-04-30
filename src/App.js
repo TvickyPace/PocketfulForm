@@ -3,7 +3,7 @@ import "./App.css";
 import TypeForm from "./TypeForm";
 import getComponentTexts from "./util/functions/functions";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-// import apiCallFunction from "./util/APIs/services";
+import apiCallFunction from "./util/APIs/services";
 
 function App() {
   const componentText = getComponentTexts("typeForm");
@@ -99,6 +99,8 @@ function App() {
   //handle continuation
   const handleContinue = useCallback(
     (stage) => {
+      const stage1ApiBody = {};
+      const stage2ApiBody = {};
       const newContent = JSON.parse(JSON.stringify(currentContent));
       if (stage === "stage1") {
         const formPlainBoolean = newContent[
@@ -114,7 +116,6 @@ function App() {
           }
         });
         if (formPlainBoolean) {
-          const stage1ApiBody = {};
           newContent[`${stage}`].formPlain.formList.map((item) => {
             if (currentParams[`${item.key}`]) {
               if (item.key === "dp_id") {
@@ -135,14 +136,11 @@ function App() {
           if (newContent[`${stage}`].options.value === "Yes") {
             stage1ApiBody[`opt_in`] = true;
             stage1ApiBody[`opt_out`] = false;
-            // apiCallFunction("http://127.0.0.1:5000/user-info", stage1ApiBody);
-            console.log(stage1ApiBody);
             setCurrentStage("stage2");
           } else {
             stage1ApiBody[`opt_in`] = false;
             stage1ApiBody[`opt_out`] = true;
-            // apiCallFunction("http://eform.pacefin.in/user-info", stage1ApiBody);
-            console.log(stage1ApiBody);
+            apiCallFunction("http://eform.pacefin.in/user-info", stage1ApiBody);
             setCurrentStage("stage3");
           }
         } else {
@@ -284,7 +282,6 @@ function App() {
           });
           setCurrentContent(newContent);
         } else if (form1Boolean && form2Boolean && form3Boolean) {
-          const stage2ApiBody = {};
           newContent[`${stage}`].form.formData1.isError = false;
           newContent[`${stage}`].form.formData1.formList.map((item) => {
             stage2ApiBody[`${item.key}`] =
