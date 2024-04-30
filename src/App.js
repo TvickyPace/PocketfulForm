@@ -65,6 +65,7 @@ function App() {
       }
       return item;
     });
+    setCurrentContent(newContent);
   }
 
   const handleFormPlainChanges = useCallback(
