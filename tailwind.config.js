@@ -10,6 +10,7 @@ module.exports = {
       },
       screens: {
         navMax: "1024px",
+        navMin: "340px",
       },
     },
   },

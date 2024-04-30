@@ -24,7 +24,6 @@ function TypeForm({
   currentParams,
   optOutResponse,
 }) {
-  console.log(optOutResponse);
   return (
     <div className=" w-full relative flex flex-col gap-y-6 ">
       {currentStage !== "stage4" && (
@@ -195,7 +194,7 @@ function TypeForm({
       )}
       {componentText?.form && (
         <div>
-          <div className="flex justify-between items-center">
+          <div className="flex md:justify-between md:items-center md:flex-row flex-col items-start gap-2">
             <p className="text-xl flex items-center gap-2">
               {componentText?.form?.heading}{" "}
               <span className="bg-dark-black rounded-full text-slate-50 w-5 h-5 flex items-center justify-center text-base">

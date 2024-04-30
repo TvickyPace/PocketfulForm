@@ -69,6 +69,7 @@ function App() {
     setCurrentContent(newContent);
   }
 
+  //handle formPlain changes
   const handleFormPlainChanges = useCallback(
     (value, key) => {
       const newContent = JSON.parse(JSON.stringify(currentContent));
@@ -152,8 +153,6 @@ function App() {
           });
           setCurrentContent(newContent);
           if (newContent[`${stage}`].options.value === "Yes") {
-            stage1ApiBody[`opt_in`] = true;
-            stage1ApiBody[`opt_out`] = false;
             setCurrentStage("stage2");
           } else {
             stage1ApiBody[`opt_in`] = false;
@@ -162,7 +161,6 @@ function App() {
               "http://eform.pacefin.in/user-info",
               stage1ApiBody
             );
-
             const currentResponse = optOutResponse.data.response.response;
             optOutNewResponse[`entity_id`] =
               currentResponse.access_token.entity_id;
@@ -339,26 +337,55 @@ function App() {
             return item;
           });
           if (form2SimpleBoolean && form3SimpleBoolean) {
-            stage2ApiBody[`nominee1_share`] = 33;
-            stage2ApiBody[`nominee2_share`] = 33;
-            stage2ApiBody[`nominee3_share`] = 33;
+            stage2ApiBody[`nominee1_share`] = "33";
+            stage2ApiBody[`nominee2_share`] = "33";
+            stage2ApiBody[`nominee3_share`] = "33";
           } else if (form2SimpleBoolean || form3SimpleBoolean) {
             if (form2SimpleBoolean) {
-              stage2ApiBody[`nominee1_share`] = 50;
-              stage2ApiBody[`nominee2_share`] = 50;
+              stage2ApiBody[`nominee1_share`] = "50";
+              stage2ApiBody[`nominee2_share`] = "50";
+              stage2ApiBody[`nominee3_share`] = "NA";
             }
             if (form3SimpleBoolean) {
-              stage2ApiBody[`nominee1_share`] = 50;
-              stage2ApiBody[`nominee3_share`] = 50;
+              stage2ApiBody[`nominee1_share`] = "50";
+              stage2ApiBody[`nominee2_share`] = "NA";
+              stage2ApiBody[`nominee3_share`] = "50";
             }
           } else if (!form2SimpleBoolean && !form3SimpleBoolean) {
-            stage2ApiBody[`nominee1_share`] = 100;
+            stage2ApiBody[`nominee1_share`] = "100";
+            stage2ApiBody[`nominee2_share`] = "NA";
+            stage2ApiBody[`nominee3_share`] = "NA";
           }
+          newContent[`stage1`].formPlain.formList.forEach((item) => {
+            if (currentParams[`${item.key}`]) {
+              if (item.key === "dp_id") {
+                stage2ApiBody[`client_id`] = currentParams[`${item.key}`];
+              }
+              stage2ApiBody[`${item.key}`] = currentParams[`${item.key}`];
+            } else {
+              if (item.key === "dp_id") {
+                stage2ApiBody[`client_id`] = item.value;
+              }
+              stage2ApiBody[`${item.key}`] = item.value;
+            }
+          });
+          stage2ApiBody[`opt_in`] = true;
+          stage2ApiBody[`opt_out`] = false;
           console.log(stage2ApiBody);
+          // const optOutResponse = await apiCallFunction(
+          //   "http://eform.pacefin.in/nominee-info",
+          //   stage2ApiBody
+          // );
+          // console.log(optOutResponse);
+          //  const currentResponse = optOutResponse.data.response.response;
+          //  optOutNewResponse[`entity_id`] =
+          //    currentResponse.access_token.entity_id;
+          //  optOutNewResponse[`callback_id`] = currentResponse.callback;
+          //  optOutNewResponse[`email`] = stage1ApiBody.email;
+          //  optOutNewResponse[`token_id`] = currentResponse.access_token.id;
+          //  setOptResponse(optOutNewResponse);
           setCurrentStage("stage3");
         }
-      } else if (stage === "stage3") {
-        setCurrentStage("stage4");
       }
     },
     [currentContent, currentParams]
@@ -390,8 +417,6 @@ function App() {
     };
   }, [currentStage, handleContinue]);
 
-  console.log(optOutResponse);
-
   return (
     <>
       <div className=" bg-white px-1 relative navMax:py-6 sm:pt-[80px] pt-[69px] sm:pb-5 pb-4 ">
@@ -405,22 +430,28 @@ function App() {
             return (
               <React.Fragment key={index}>
                 <div
-                  className="flex items-center gap-1 min-w-max px-2 select-none cursor-pointer "
+                  className={`flex items-center gap-1 min-w-max navMin:px-2 px-0.5 select-none cursor-pointer ${
+                    currentStage === "stage3" && "text-slate-500 cursor-auto"
+                  } `}
                   onClick={() => {
                     if (index < Number(currentStage.slice(5))) {
-                      handleNavigation(item.key);
+                      currentStage !== "stage3" && handleNavigation(item.key);
                     }
                   }}
                 >
                   {Number(currentStage.slice(5)) > index ? (
-                    <CheckCircleRoundedIcon style={{ fontSize: "26px" }} />
+                    <CheckCircleRoundedIcon className=" md:text-[26px] text-[20px] " />
                   ) : (
-                    <div className=" bg-dark-black rounded-full text-slate-50 w-6 h-6 flex items-center justify-center">
+                    <div className=" bg-dark-black rounded-full text-slate-50 md:w-6 md:h-6 w-5 h-5 flex items-center justify-center">
                       {index + 1}
                     </div>
                   )}
 
-                  <p className=" text-sm md:text-base font-semibold text-dark-black">
+                  <p
+                    className={`text-xs md:text-base font-semibold text-dark-black ${
+                      currentStage === "stage3" && "text-slate-500 cursor-auto"
+                    }`}
+                  >
                     {item?.heading}
                   </p>
                 </div>
